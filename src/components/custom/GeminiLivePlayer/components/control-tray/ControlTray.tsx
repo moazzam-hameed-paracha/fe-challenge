@@ -1,25 +1,39 @@
 "use client";
 
-import { memo, ReactNode, useEffect, useRef, useState } from "react";
+import { memo, useEffect, useMemo, useRef, useState } from "react";
 import { useLiveAPIContext } from "../../contexts/LiveAPIContext";
 import { AudioRecorder } from "../../lib/audio-recorder";
 import AudioPulse from "../audio-pulse/AudioPulse";
-import SettingsDialog from "../settings-dialog/SettingsDialog";
 import { cn } from "@/utils";
 import { Mic, MicOff, Pause, Play } from "lucide-react";
 
-export type ControlTrayProps = {
-  children?: ReactNode;
-  enableEditingSettings?: boolean;
-};
-
-function ControlTray({ children, enableEditingSettings }: ControlTrayProps) {
+function ControlTray() {
   const [inVolume, setInVolume] = useState(0);
   const [audioRecorder] = useState(() => new AudioRecorder());
   const [muted, setMuted] = useState(false);
   const connectButtonRef = useRef<HTMLButtonElement>(null);
 
-  const { client, connected, connect, disconnect, volume } = useLiveAPIContext();
+  const { clientType, gptAPI, liveAPI } = useLiveAPIContext();
+
+  const { client, connected, connect, disconnect, volume } = useMemo(() => {
+    if (clientType === "gemini") {
+      return {
+        client: liveAPI.client,
+        connected: liveAPI.connected,
+        connect: liveAPI.connect,
+        disconnect: liveAPI.disconnect,
+        volume: liveAPI.volume,
+      };
+    }
+
+    return {
+      client: gptAPI.client,
+      connected: gptAPI.connected,
+      connect: gptAPI.connect,
+      disconnect: gptAPI.disconnect,
+      volume: gptAPI.volume,
+    };
+  }, [clientType, gptAPI, liveAPI]);
 
   useEffect(() => {
     if (!connected && connectButtonRef.current) {
@@ -78,8 +92,6 @@ function ControlTray({ children, enableEditingSettings }: ControlTrayProps) {
           {!muted ? <Mic className="relative z-10" /> : <MicOff className="relative z-10" />}
         </button>
 
-        {children}
-
         <div className="flex items-center justify-center w-12 h-12 rounded-[18px] pointer-events-none">
           <AudioPulse volume={volume} active={connected} hover={false} />
         </div>
@@ -107,8 +119,6 @@ function ControlTray({ children, enableEditingSettings }: ControlTrayProps) {
           Streaming
         </span>
       </div>
-
-      {enableEditingSettings && <SettingsDialog />}
     </section>
   );
 }

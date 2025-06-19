@@ -1,40 +1,48 @@
-/**
- * Copyright 2024 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-import { createContext, FC, ReactNode, useContext } from "react";
-import { useLiveAPI, UseLiveAPIResults } from "../hooks/use-live-api";
+import React, { createContext, FC, ReactNode, useContext } from "react";
 import { LiveClientOptions } from "../types";
+import { useLiveAPI, UseLiveAPIResults } from "../hooks/use-live-api";
+import { useGPTRealtime, UseGPTRealtimeResults } from "../hooks/use-gpt-api";
 
-const LiveAPIContext = createContext<UseLiveAPIResults | undefined>(undefined);
+/**
+ * Combined context value exposing both Gemini Live API and GPT Realtime API clients.
+ * Includes which client is currently active.
+ */
+export interface LiveAPIContextValue {
+  liveAPI: UseLiveAPIResults;
+  gptAPI: UseGPTRealtimeResults;
+  clientType: string;
+}
+
+const LiveAPIContext = createContext<LiveAPIContextValue | undefined>(undefined);
 
 export type LiveAPIProviderProps = {
   children: ReactNode;
   options: LiveClientOptions;
 };
 
+/**
+ * Provides both the Gemini live client and the GPT realtime client to descendants,
+ * along with the active client indicator from options.
+ */
 export const LiveAPIProvider: FC<LiveAPIProviderProps> = ({ options, children }) => {
   const liveAPI = useLiveAPI(options);
+  const gptAPI = useGPTRealtime(options.apiKey);
 
-  return <LiveAPIContext.Provider value={liveAPI}>{children}</LiveAPIContext.Provider>;
+  return (
+    <LiveAPIContext.Provider value={{ liveAPI, gptAPI, clientType: options.clientType }}>
+      {children}
+    </LiveAPIContext.Provider>
+  );
 };
 
-export const useLiveAPIContext = () => {
+/**
+ * Hook to access the combined Live API context.
+ * @throws if used outside LiveAPIProvider
+ */
+export const useLiveAPIContext = (): LiveAPIContextValue => {
   const context = useContext(LiveAPIContext);
   if (!context) {
-    throw new Error("useLiveAPIContext must be used wihin a LiveAPIProvider");
+    throw new Error("useLiveAPIContext must be used within a LiveAPIProvider");
   }
   return context;
 };

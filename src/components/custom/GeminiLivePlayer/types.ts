@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-import { GoogleGenAIOptions, LiveClientToolResponse, LiveServerMessage, Part } from "@google/genai";
+import { LiveClientToolResponse, LiveServerMessage, Part } from "@google/genai";
 
 /**
  * the options to initiate the client, ensure apiKey is required
  */
-export type LiveClientOptions = GoogleGenAIOptions & { apiKey: string };
+export type LiveClientOptions = { apiKey: string; clientType: "gemini" | "gpt" };
 
 /** log types */
 export type StreamingLog = {

@@ -5,13 +5,12 @@ import { Altair } from "./components/altair/Altair";
 import ControlTray from "./components/control-tray/ControlTray";
 import { LiveClientOptions } from "./types";
 
-const API_KEY = process.env.NEXT_PUBLIC_GEMINI_API_KEY as string;
-if (typeof API_KEY !== "string") {
-  throw new Error("set REACT_APP_GEMINI_API_KEY in .env");
-}
+const GEMINI_API_KEY = process.env.NEXT_PUBLIC_GEMINI_API_KEY as string;
+const GPT_API_KEY = process.env.NEXT_PUBLIC_OPENAI_API_KEY as string;
 
 const apiOptions: LiveClientOptions = {
-  apiKey: API_KEY,
+  apiKey: GEMINI_API_KEY || GPT_API_KEY,
+  clientType: GEMINI_API_KEY ? "gpt" : "gpt",
 };
 
 function App() {
@@ -21,7 +20,7 @@ function App() {
   return (
     <LiveAPIProvider options={apiOptions}>
       <Altair />
-      <ControlTray enableEditingSettings={true}>{/* put your own buttons here */}</ControlTray>
+      <ControlTray />
     </LiveAPIProvider>
   );
 }

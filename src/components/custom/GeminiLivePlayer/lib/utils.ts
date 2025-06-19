@@ -20,9 +20,7 @@ export type GetAudioContextOptions = AudioContextOptions & {
 
 const map: Map<string, AudioContext> = new Map();
 
-export const audioContext: (
-  options?: GetAudioContextOptions
-) => Promise<AudioContext> = (() => {
+export const audioContext: (options?: GetAudioContextOptions) => Promise<AudioContext> = (() => {
   const didInteract = new Promise((res) => {
     window.addEventListener("pointerdown", res, { once: true });
     window.addEventListener("keydown", res, { once: true });
@@ -31,8 +29,7 @@ export const audioContext: (
   return async (options?: GetAudioContextOptions) => {
     try {
       const a = new Audio();
-      a.src =
-        "data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA";
+      a.src = "data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA";
       await a.play();
       if (options?.id && map.has(options.id)) {
         const ctx = map.get(options.id);
@@ -45,7 +42,7 @@ export const audioContext: (
         map.set(options.id, ctx);
       }
       return ctx;
-    } catch (e) {
+    } catch (_e) {
       await didInteract;
       if (options?.id && map.has(options.id)) {
         const ctx = map.get(options.id);
@@ -63,8 +60,8 @@ export const audioContext: (
 })();
 
 export function base64ToArrayBuffer(base64: string) {
-  var binaryString = atob(base64);
-  var bytes = new Uint8Array(binaryString.length);
+  const binaryString = atob(base64);
+  const bytes = new Uint8Array(binaryString.length);
   for (let i = 0; i < binaryString.length; i++) {
     bytes[i] = binaryString.charCodeAt(i);
   }

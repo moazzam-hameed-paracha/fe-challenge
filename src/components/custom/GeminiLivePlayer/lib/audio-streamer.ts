@@ -14,10 +14,7 @@
  * limitations under the License.
  */
 
-import {
-  createWorketFromSrc,
-  registeredWorklets,
-} from "./audioworklet-registry";
+import { createWorketFromSrc, registeredWorklets } from "./audioworklet-registry";
 
 export class AudioStreamer {
   private sampleRate: number = 24000;
@@ -44,11 +41,8 @@ export class AudioStreamer {
     this.addPCM16 = this.addPCM16.bind(this);
   }
 
-  async addWorklet<T extends (d: any) => void>(
-    workletName: string,
-    workletSrc: string,
-    handler: T
-  ): Promise<this> {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  async addWorklet<T extends (d: any) => void>(workletName: string, workletSrc: string, handler: T): Promise<this> {
     let workletsRecord = registeredWorklets.get(this.context);
     if (workletsRecord && workletsRecord[workletName]) {
       // the worklet already exists on this context
@@ -125,11 +119,7 @@ export class AudioStreamer {
   }
 
   private createAudioBuffer(audioData: Float32Array): AudioBuffer {
-    const audioBuffer = this.context.createBuffer(
-      1,
-      audioData.length,
-      this.sampleRate
-    );
+    const audioBuffer = this.context.createBuffer(1, audioData.length, this.sampleRate);
     audioBuffer.getChannelData(0).set(audioData);
     return audioBuffer;
   }
@@ -137,10 +127,7 @@ export class AudioStreamer {
   private scheduleNextBuffer() {
     const SCHEDULE_AHEAD_TIME = 0.2;
 
-    while (
-      this.audioQueue.length > 0 &&
-      this.scheduledTime < this.context.currentTime + SCHEDULE_AHEAD_TIME
-    ) {
+    while (this.audioQueue.length > 0 && this.scheduledTime < this.context.currentTime + SCHEDULE_AHEAD_TIME) {
       const audioData = this.audioQueue.shift()!;
       const audioBuffer = this.createAudioBuffer(audioData);
       const source = this.context.createBufferSource();
@@ -151,10 +138,7 @@ export class AudioStreamer {
         }
         this.endOfQueueAudioSource = source;
         source.onended = () => {
-          if (
-            !this.audioQueue.length &&
-            this.endOfQueueAudioSource === source
-          ) {
+          if (!this.audioQueue.length && this.endOfQueueAudioSource === source) {
             this.endOfQueueAudioSource = null;
             this.onComplete();
           }
@@ -167,7 +151,7 @@ export class AudioStreamer {
       const worklets = registeredWorklets.get(this.context);
 
       if (worklets) {
-        Object.entries(worklets).forEach(([workletName, graph]) => {
+        Object.entries(worklets).forEach(([_workletName, graph]) => {
           const { node, handlers } = graph;
           if (node) {
             source.connect(node);
@@ -203,12 +187,8 @@ export class AudioStreamer {
         }
       }
     } else {
-      const nextCheckTime =
-        (this.scheduledTime - this.context.currentTime) * 1000;
-      setTimeout(
-        () => this.scheduleNextBuffer(),
-        Math.max(0, nextCheckTime - 50)
-      );
+      const nextCheckTime = (this.scheduledTime - this.context.currentTime) * 1000;
+      setTimeout(() => this.scheduleNextBuffer(), Math.max(0, nextCheckTime - 50));
     }
   }
 
@@ -223,10 +203,7 @@ export class AudioStreamer {
       this.checkInterval = null;
     }
 
-    this.gainNode.gain.linearRampToValueAtTime(
-      0,
-      this.context.currentTime + 0.1
-    );
+    this.gainNode.gain.linearRampToValueAtTime(0, this.context.currentTime + 0.1);
 
     setTimeout(() => {
       this.gainNode.disconnect();
