@@ -1,0 +1,93 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  /* Map tokens into Tailwind’s colors */
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-destructive: hsl(var(--destructive));
+  --color-border: hsl(var(--border));
+  --color-ring: hsl(var(--ring));
+  --color-input: hsl(var(--input));
+  /* Chart colors */
+  --color-chart-1: hsl(var(--chart-1));
+  --color-chart-2: hsl(var(--chart-2));
+  --color-chart-3: hsl(var(--chart-3));
+  --color-chart-4: hsl(var(--chart-4));
+  --color-chart-5: hsl(var(--chart-5));
+  /* Sidebar */
+  --color-sidebar: hsl(var(--sidebar));
+  --color-sidebar-foreground: hsl(var(--sidebar-foreground));
+  --color-sidebar-primary: hsl(var(--sidebar-primary));
+  --color-sidebar-primary-foreground: hsl(var(--sidebar-primary-foreground));
+  --color-sidebar-accent: hsl(var(--sidebar-accent));
+  --color-sidebar-accent-foreground: hsl(var(--sidebar-accent-foreground));
+  --color-sidebar-border: hsl(var(--sidebar-border));
+  --color-sidebar-ring: hsl(var(--sidebar-ring));
+}
+
+/* Base token definitions for dark mode */
+:root,
+.dark {
+  /* Core */
+  --background: 0 0% 9%; /* #0d0e17 */
+  --foreground: 0 0% 100%; /* #ffffff */
+
+  /* Panels & Cards */
+  --card: 230 25% 13%; /* #111222 */
+  --card-foreground: 0 0% 100%;
+
+  /* Popovers & Modals */
+  --popover: 230 25% 13%;
+  --popover-foreground: 0 0% 100%;
+
+  /* Brand & Accent */
+  --primary: 186 100% 53%; /* #00d8ff */
+  --primary-foreground: 0 0% 100%;
+
+  --muted: 240 10% 29%; /* #444559 */
+  --muted-foreground: 240 10% 56%; /* #88889c */
+
+  --destructive: 360 100% 60%; /* #ff4d4f */
+
+  /* Borders & Rings */
+  --border: 240 15% 17%; /* #222236 */
+  --input: 240 15% 17%;
+  --ring: 186 100% 53%;
+
+  /* Charts */
+  --chart-1: 186 100% 53%;
+  --chart-2: 182 95% 50%; /* #04e5e5 */
+  --chart-3: 290 100% 50%; /* #e00aff */
+  --chart-4: 48 100% 50%; /* #ffbf00 */
+  --chart-5: 168 100% 50%; /* #00ffbf */
+
+  /* Sidebar */
+  --sidebar: 230 25% 9%; /* #0d0e17 */
+  --sidebar-foreground: 0 0% 100%;
+  --sidebar-primary: 186 100% 53%;
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 186 100% 53%;
+  --sidebar-accent-foreground: 0 0% 100%;
+  --sidebar-border: 240 15% 17%;
+  --sidebar-ring: 186 100% 53%;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
