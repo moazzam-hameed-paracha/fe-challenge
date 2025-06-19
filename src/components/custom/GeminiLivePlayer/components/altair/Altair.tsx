@@ -43,6 +43,7 @@ function AltairComponent() {
     } else {
       setModel("gpt-4o-realtime-preview-2024-12-17");
       setConfig({
+        // instructions: "You are my helpful assistant.",
         voice: "alloy",
         input_audio_format: "pcm16",
         output_audio_format: "pcm16",

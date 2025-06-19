@@ -29,6 +29,8 @@ export interface GPTRealtimeClientOptions {
  */
 export interface GPTSessionConfig {
   voice?: string;
+  modalities?: ("text" | "audio")[];
+  instructions?: string;
   input_audio_format?: "pcm16";
   output_audio_format?: "pcm16";
   turn_detection?: {
@@ -65,6 +67,7 @@ export class GPTRealtimeClient extends EventEmitter<GPTRealtimeClientEventTypes>
     if (this.ws) return Promise.resolve(false);
     this.model = model;
     this.config = config;
+
     const protocols: string[] = [
       "realtime",
       `openai-insecure-api-key.${this.apiKey}`,

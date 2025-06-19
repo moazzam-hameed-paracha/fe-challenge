@@ -3,7 +3,6 @@
 import { memo, useEffect, useMemo, useRef, useState } from "react";
 import { useLiveAPIContext } from "../../contexts/LiveAPIContext";
 import { AudioRecorder } from "../../lib/audio-recorder";
-import AudioPulse from "../audio-pulse/AudioPulse";
 import { cn } from "@/utils";
 import { Mic, MicOff, Pause, Play } from "lucide-react";
 
@@ -15,14 +14,13 @@ function ControlTray() {
 
   const { clientType, gptAPI, liveAPI } = useLiveAPIContext();
 
-  const { client, connected, connect, disconnect, volume } = useMemo(() => {
+  const { client, connected, connect, disconnect } = useMemo(() => {
     if (clientType === "gemini") {
       return {
         client: liveAPI.client,
         connected: liveAPI.connected,
         connect: liveAPI.connect,
         disconnect: liveAPI.disconnect,
-        volume: liveAPI.volume,
       };
     }
 
@@ -31,7 +29,6 @@ function ControlTray() {
       connected: gptAPI.connected,
       connect: gptAPI.connect,
       disconnect: gptAPI.disconnect,
-      volume: gptAPI.volume,
     };
   }, [clientType, gptAPI, liveAPI]);
 
@@ -70,10 +67,10 @@ function ControlTray() {
   }, [connected, client, muted, audioRecorder]);
 
   return (
-    <section className="absolute bottom-0 left-1/2 transform -translate-x-1/2 inline-flex justify-center items-start gap-2 pb-4">
+    <section className="w-full flex justify-center items-start gap-2">
       <nav
         className={cn(
-          "bg-[#181a1b] border border-[#404547] rounded-[27px] inline-flex gap-3 items-center overflow-hidden p-2.5 transition-opacity duration-300",
+          "bg-[#181a1b] border border-[#404547] rounded-[27px] flex gap-3 items-center overflow-hidden p-2.5 transition-opacity duration-300",
           { "opacity-50": !connected }
         )}
       >
@@ -91,10 +88,6 @@ function ControlTray() {
           <span {...ringProps} />
           {!muted ? <Mic className="relative z-10" /> : <MicOff className="relative z-10" />}
         </button>
-
-        <div className="flex items-center justify-center w-12 h-12 rounded-[18px] pointer-events-none">
-          <AudioPulse volume={volume} active={connected} hover={false} />
-        </div>
       </nav>
 
       <div className="flex flex-col items-center gap-1">
@@ -110,14 +103,6 @@ function ControlTray() {
             {connected ? <Pause /> : <Play />}
           </button>
         </div>
-        <span
-          className={cn(
-            "text-[11px] select-none transition-opacity",
-            connected ? "opacity-100 text-[#80c1ff]" : "opacity-0"
-          )}
-        >
-          Streaming
-        </span>
       </div>
     </section>
   );
