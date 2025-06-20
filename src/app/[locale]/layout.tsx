@@ -5,6 +5,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import type { Metadata } from "next";
 import "../globals.css";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
+import { CursorFollower } from "@/components/custom";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -77,6 +78,10 @@ export default async function LocaleLayout({
     <html lang={locale} suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
+          {/* Custom cursor follower for enhanced interactivity */}
+          <CursorFollower />
+
+          {/* Provide the NextIntl context for internationalization */}
           <NextIntlClientProvider>{children}</NextIntlClientProvider>
         </ThemeProvider>
       </body>
