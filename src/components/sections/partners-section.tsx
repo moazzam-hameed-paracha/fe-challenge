@@ -6,6 +6,7 @@ import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
 import { AnimatedSection } from "@/components/ui/animated-section";
 import { GradientText } from "@/components/ui/gradient-text";
+import { useTranslations } from "next-intl";
 
 /**
  * Partners Section Component
@@ -13,18 +14,8 @@ import { GradientText } from "@/components/ui/gradient-text";
  * Responsive: single column on mobile/tablet, two columns on desktop
  */
 export function PartnersSection() {
-  const partners = [
-    {
-      name: "Epsilla",
-      description: "AI-powered vector database platform",
-      imageSrc: "/Q9Q0oH9p33Izf2B5l5XNrEGgXVc.webp",
-    },
-    {
-      name: "Jobright",
-      description: "AI-powered job search career platform",
-      imageSrc: "/GWmK9SDZ5Q3LQzfpC9PErI9LYOk.webp",
-    },
-  ];
+  const t = useTranslations("PartnersSection");
+  const partners = t.raw("partners");
 
   return (
     <AnimatedSection className="py-20 px-6">
@@ -38,12 +29,12 @@ export function PartnersSection() {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <GradientText>Our partners</GradientText>
+            <GradientText>{t("title")}</GradientText>
           </motion.h2>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 justify-items-center">
-          {partners.map((p, idx) => (
+          {partners.map((p: { name: string; description: string }, idx: number) => (
             <motion.div
               key={idx}
               className="h-full"
@@ -65,7 +56,12 @@ export function PartnersSection() {
                     <CardContent className="p-6 flex flex-col items-center text-center">
                       {/* Partner logo */}
                       <div className="w-32 h-32 mb-4 relative">
-                        <Image src={p.imageSrc} alt={p.name} fill className="object-contain" />
+                        <Image
+                          src={idx === 0 ? "/Q9Q0oH9p33Izf2B5l5XNrEGgXVc.webp" : "/GWmK9SDZ5Q3LQzfpC9PErI9LYOk.webp"}
+                          alt={p.name}
+                          fill
+                          className="object-contain"
+                        />
                       </div>
 
                       {/* Partner name */}

@@ -6,6 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { AnimatedSection } from "@/components/ui/animated-section";
 import { GradientText } from "@/components/ui/gradient-text";
 import { DualInfiniteScrollGrid, LogoItem } from "@/components/ui/dual-infinite-scroll-grid";
+import { useTranslations } from "next-intl";
 
 /**
  * Core Features Section Component
@@ -14,20 +15,18 @@ import { DualInfiniteScrollGrid, LogoItem } from "@/components/ui/dual-infinite-
  * First feature includes a central overlay badge over the carousel
  */
 export function CoreFeaturesSection() {
+  const t = useTranslations("CoreFeaturesSection");
   const features = [
     {
-      title: "Agentic Workflow",
-      description: "Intelligent automation that adapts to your business processes and makes decisions autonomously.",
+      key: "agentic_workflow",
       hasScroll: true,
     },
     {
-      title: "Data Engineering",
-      description: "Advanced data processing and analysis capabilities for better insights and decision making.",
+      key: "data_engineering",
       imageSrc: "/data-engineering.webp",
     },
     {
-      title: "Conversational Reasoning",
-      description: "Natural language processing that understands context and provides intelligent responses.",
+      key: "conversational_reasoning",
       imageSrc: "/continuous-learning.webp",
     },
   ];
@@ -60,7 +59,7 @@ export function CoreFeaturesSection() {
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          <GradientText>Core features</GradientText>
+          <GradientText>{t("title")}</GradientText>
         </motion.h2>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
@@ -93,20 +92,24 @@ export function CoreFeaturesSection() {
                             {/* Central badge overlay */}
                             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                               <div className="w-32 h-32 rounded-full border-2 border-[#70befa] flex flex-col items-center justify-center bg-slate-800 bg-opacity-50">
-                                <span className="text-3xl font-bold text-white">100+</span>
-                                <span className="text-sm text-gray-300">Automations</span>
+                                <span className="text-3xl font-bold text-white">{t("badge.count")}</span>
+                                <span className="text-sm text-gray-300">{t("badge.label")}</span>
                               </div>
                             </div>
                           </>
                         ) : (
-                          <img src={feature.imageSrc!} alt={feature.title} className="w-full h-full object-cover" />
+                          <img
+                            src={feature.imageSrc!}
+                            alt={t(`features.${feature.key}.title`)}
+                            className="w-full h-full object-cover"
+                          />
                         )}
                       </div>
 
                       <h3 className="text-2xl font-semibold mb-4">
-                        <GradientText>{feature.title}</GradientText>
+                        <GradientText>{t(`features.${feature.key}.title`)}</GradientText>
                       </h3>
-                      <p className="text-gray-400 leading-relaxed flex-1">{feature.description}</p>
+                      <p className="text-gray-400 leading-relaxed flex-1">{t(`features.${feature.key}.description`)}</p>
                     </CardContent>
                   </Card>
                 </div>

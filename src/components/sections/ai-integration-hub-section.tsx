@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { AnimatedSection } from "@/components/ui/animated-section";
 import { GradientText } from "@/components/ui/gradient-text";
 import { GeminiLivePlayer } from "../custom";
+import { useTranslations } from "next-intl";
 
 /**
  * AI Integration Hub Section Component
@@ -12,6 +13,7 @@ import { GeminiLivePlayer } from "../custom";
  * Features simulated conversation and audio visualizer
  */
 export function AIIntegrationHubSection() {
+  const t = useTranslations("AIIntegrationHubSection");
   return (
     <AnimatedSection className="py-20 px-6">
       <div className="container mx-auto">
@@ -23,8 +25,8 @@ export function AIIntegrationHubSection() {
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          <GradientText>AI Integration Hub</GradientText>
-          <p className="text-gray-400 text-2xl mt-3">Experience our AI agent in real-time conversation</p>
+          <GradientText>{t("title")}</GradientText>
+          <p className="text-gray-400 text-2xl mt-3">{t("subtitle")}</p>
         </motion.h2>
 
         {/* Demo interface with custom border styling */}

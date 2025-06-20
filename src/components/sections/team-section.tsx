@@ -6,6 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { AnimatedSection } from "@/components/ui/animated-section";
 import { GradientText } from "@/components/ui/gradient-text";
 import { InfiniteCarousel } from "@/components/ui/infinite-carousel";
+import { useTranslations } from "next-intl";
 
 /**
  * Team Section Component
@@ -13,19 +14,12 @@ import { InfiniteCarousel } from "@/components/ui/infinite-carousel";
  * Features hoverable cards with team member information
  */
 export function TeamSection() {
-  const teamMembers = [
-    { name: "CEO", role: "Chief Executive Officer", image: "/placeholder.svg?height=200&width=200" },
-    { name: "David Li", role: "CTO", image: "/placeholder.svg?height=200&width=200" },
-    { name: "Alex Wang", role: "Lead Engineer", image: "/placeholder.svg?height=200&width=200" },
-    { name: "Sarah Chen", role: "Product Manager", image: "/placeholder.svg?height=200&width=200" },
-    { name: "Mike Johnson", role: "AI Researcher", image: "/placeholder.svg?height=200&width=200" },
-    { name: "Lisa Zhang", role: "UX Designer", image: "/placeholder.svg?height=200&width=200" },
-  ];
+  const t = useTranslations("TeamSection");
+  const teamMembers = t.raw("teamMembers");
 
   return (
     <AnimatedSection className="py-20 px-6">
       <div className="container mx-auto" id="team">
-        {/* Section title */}
         {/* Section title */}
         <div className="max-w-6xl mx-auto">
           <motion.h2
@@ -35,12 +29,12 @@ export function TeamSection() {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <GradientText>Meet our team</GradientText>
+            <GradientText>{t("title")}</GradientText>
           </motion.h2>
         </div>
         {/* Team carousel */}
         <InfiniteCarousel speed={30}>
-          {teamMembers.map((member, index) => (
+          {teamMembers.map((member: { name: string; role: string }, index: number) => (
             <motion.div
               key={index}
               whileHover={{ scale: 1.05, y: -5 }}
@@ -52,7 +46,7 @@ export function TeamSection() {
                   {/* Team member photo */}
                   <div className="w-24 h-24 bg-gray-800/50 rounded-full mx-auto mb-4 overflow-hidden border-2 border-gray-700/50">
                     <Image
-                      src={member.image || "/placeholder.svg"}
+                      src={"/placeholder.svg?height=200&width=200"}
                       alt={member.name}
                       width={96}
                       height={96}

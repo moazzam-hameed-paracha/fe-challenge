@@ -3,6 +3,7 @@
 import React, { FC, useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { GradientText } from "@/components/ui/gradient-text";
+import { useTranslations } from "next-intl";
 
 /**
  * BlobCanvas Component
@@ -26,7 +27,7 @@ const BlobCanvas: FC<{ onReady?: () => void }> = ({ onReady }) => {
     type Blob = { x: number; y: number; r: number; vx: number; vy: number };
     const blobs: Blob[] = [];
     // Brighter theme blue gradients (~50% brighter)
-    const colors = ["rgba(115, 160, 195, 0.3)", "rgba(72, 104, 128, 0.2)"];
+    const colors = ["#5ab4fa", "#6cb7f1"];
 
     const resize = () => {
       canvas.width = window.innerWidth;
@@ -108,6 +109,7 @@ const BlobCanvas: FC<{ onReady?: () => void }> = ({ onReady }) => {
  * - Main content spans full width, with animated underline once canvas is ready
  */
 export const HeroSection: FC = () => {
+  const t = useTranslations("HeroSection");
   const [showSplash, setShowSplash] = useState(true);
   const [canvasReady, setCanvasReady] = useState(false);
   const headingRef = useRef<HTMLHeadingElement>(null);
@@ -146,7 +148,7 @@ export const HeroSection: FC = () => {
             animate={{ scale: 1 }}
             transition={{ duration: 0.8 }}
           >
-            Energant.ai
+            {t("splashTitle")}
           </motion.h1>
         </motion.div>
       )}
@@ -166,7 +168,7 @@ export const HeroSection: FC = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            <GradientText>The AI Agent Helps You Think and Do.</GradientText>
+            <GradientText>{t("title")}</GradientText>
           </motion.h1>
 
           {/* Animated underline when canvas ready */}
@@ -185,7 +187,7 @@ export const HeroSection: FC = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
           >
-            Revolutionize your workflow with intelligent automation and decision-making capabilities
+            {t("subtitle")}
           </motion.p>
 
           <motion.div
@@ -195,10 +197,10 @@ export const HeroSection: FC = () => {
           >
             <div className="inline-flex rounded-lg bg-black bg-opacity-60 p-1">
               <a href="#" className="px-6 py-1 text-white font-medium">
-                Try for Free
+                {t("tryForFree")}
               </a>
               <a href="#" className="ml-4 px-6 py-1 text-[#70befa] font-medium border border-[#70befa] rounded-lg">
-                Contact Us →
+                {t("contactUs")}
               </a>
             </div>
           </motion.div>

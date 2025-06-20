@@ -2,6 +2,7 @@
 
 import React from "react";
 import { GradientText } from "@/components/ui/gradient-text";
+import { useTranslations } from "next-intl";
 
 /**
  * Footer Component
@@ -9,32 +10,12 @@ import { GradientText } from "@/components/ui/gradient-text";
  * Features gradient text headers and responsive grid layout
  */
 export function Footer() {
-  const socials = [
-    { name: "Twitter", href: "#" },
-    { name: "LinkedIn", href: "#" },
-  ];
-
-  const applications = [
-    { name: "AI O&G Specialist", href: "#" },
-    { name: "AI HR", href: "#" },
-    { name: "AI Data Scientist", href: "#" },
-  ];
-
-  const resources = [
-    { name: "Security Whitepaper", href: "#" },
-    { name: "Deployment Overview", href: "#" },
-    { name: "AWS Deployment", href: "#" },
-    { name: "Azure Deployment", href: "#" },
-    { name: "Templates", href: "#" },
-  ];
-
-  const additionalLinks = [
-    { name: "Company", href: "#" },
-    { name: "Pricing", href: "#" },
-    { name: "Blog", href: "#" },
-    { name: "Terms & Conditions", href: "#" },
-    { name: "Privacy Policy", href: "#" },
-  ];
+  const t = useTranslations("Footer");
+  const socials = t.raw("socials");
+  const applications = t.raw("applications");
+  const resources = t.raw("resources");
+  const additionalLinks = t.raw("additionalLinks");
+  const year = new Date().getFullYear();
 
   return (
     <footer className="bg-gray-950 border-t border-gray-800/50 py-12 px-6">
@@ -43,19 +24,19 @@ export function Footer() {
           {/* Brand */}
           <div className="text-center md:text-left">
             <h3 className="text-2xl font-bold mb-4">
-              <GradientText>Energent.ai</GradientText>
+              <GradientText>{t("brand")}</GradientText>
             </h3>
           </div>
 
           {/* Socials */}
           <div className="text-center md:text-left">
             <h4 className="font-semibold mb-4">
-              <GradientText>Socials</GradientText>
+              <GradientText>{t("socialsTitle")}</GradientText>
             </h4>
             <ul className="space-y-2 text-sm text-gray-400">
-              {socials.map((social, idx) => (
+              {socials.map((social: { name: string }, idx: number) => (
                 <li key={idx}>
-                  <a href={social.href} className="hover:text-white transition-colors">
+                  <a href="#" className="hover:text-white transition-colors">
                     {social.name}
                   </a>
                 </li>
@@ -66,15 +47,15 @@ export function Footer() {
           {/* Links: grouped */}
           <div className="text-center md:text-left">
             <h4 className="font-semibold mb-4">
-              <GradientText>Links</GradientText>
+              <GradientText>{t("linksTitle")}</GradientText>
             </h4>
             {/* Applications subgroup */}
             <div className="mb-6">
-              <h5 className="font-semibold text-white mb-2">Applications</h5>
+              <h5 className="font-semibold text-white mb-2">{t("applicationsTitle")}</h5>
               <ul className="space-y-2 text-sm text-gray-400 ml-0 md:ml-2">
-                {applications.map((app, idx) => (
+                {applications.map((app: { name: string }, idx: number) => (
                   <li key={idx}>
-                    <a href={app.href} className="hover:text-white transition-colors">
+                    <a href="#" className="hover:text-white transition-colors">
                       {app.name}
                     </a>
                   </li>
@@ -83,11 +64,11 @@ export function Footer() {
             </div>
             {/* Resources subgroup */}
             <div>
-              <h5 className="font-semibold text-white mb-2">Resources</h5>
+              <h5 className="font-semibold text-white mb-2">{t("resourcesTitle")}</h5>
               <ul className="space-y-2 text-sm text-gray-400 ml-0 md:ml-2">
-                {resources.map((res, idx) => (
+                {resources.map((res: { name: string }, idx: number) => (
                   <li key={idx}>
-                    <a href={res.href} className="hover:text-white transition-colors">
+                    <a href="#" className="hover:text-white transition-colors">
                       {res.name}
                     </a>
                   </li>
@@ -98,9 +79,9 @@ export function Footer() {
             {/* Additional Links on mobile below resources */}
             <div className="mt-4 md:mt-6">
               <ul className="space-y-2 text-sm text-gray-400">
-                {additionalLinks.map((link, idx) => (
+                {additionalLinks.map((link: { name: string }, idx: number) => (
                   <li key={idx}>
-                    <a href={link.href} className="hover:text-white transition-colors">
+                    <a href="#" className="hover:text-white transition-colors">
                       {link.name}
                     </a>
                   </li>
@@ -115,7 +96,7 @@ export function Footer() {
 
         {/* Copyright */}
         <div className="border-t border-gray-800/50 mt-8 pt-8 text-left">
-          <p className="text-white text-sm">© {new Date().getFullYear()}, Energent.ai - All rights reserved.</p>
+          <p className="text-white text-sm">{t("copyright", { year })}</p>
         </div>
       </div>
     </footer>

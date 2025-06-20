@@ -5,12 +5,14 @@ import { motion } from "framer-motion";
 import { AnimatedSection } from "@/components/ui/animated-section";
 import { GradientText } from "@/components/ui/gradient-text";
 import { AnimatedBorderButton } from "../ui/animated-border-button";
+import { useTranslations } from "next-intl";
 
 /**
  * No-Code Automation Section
  * Highlights ease of use with a bold headline and CTA
  */
 export function NoCodeSection() {
+  const t = useTranslations("NoCodeSection");
   return (
     <AnimatedSection className="py-20 px-6">
       <div className="container mx-auto max-w-3xl text-center">
@@ -21,9 +23,9 @@ export function NoCodeSection() {
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          <GradientText>No-code, no integration.</GradientText>
+          <GradientText>{t("headline1")}</GradientText>
           <br />
-          <GradientText>Automation accessible without tech expertise.</GradientText>
+          <GradientText>{t("headline2")}</GradientText>
         </motion.h2>
 
         <motion.div
@@ -32,7 +34,7 @@ export function NoCodeSection() {
           transition={{ duration: 0.6, delay: 0.2 }}
           viewport={{ once: true }}
         >
-          <AnimatedBorderButton className="text-lg px-8 py-3">Try for Free</AnimatedBorderButton>
+          <AnimatedBorderButton className="text-lg px-8 py-3">{t("cta")}</AnimatedBorderButton>
         </motion.div>
       </div>
     </AnimatedSection>

@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import { AnimatedSection } from "@/components/ui/animated-section";
 import { GradientText } from "@/components/ui/gradient-text";
+import { useTranslations } from "next-intl";
 
 /**
  * Statistics Section Component
@@ -12,12 +13,8 @@ import { GradientText } from "@/components/ui/gradient-text";
  * Responsive: 1 column on mobile/tablet, 4 on desktop
  */
 export function StatisticsSection() {
-  const statistics = [
-    { number: "20+", label: "Projects completed" },
-    { number: "95%", label: "Satisfied customers" },
-    { number: "3h", label: "Hours saved per day" },
-    { number: "80k", label: "Cost saved per month" },
-  ];
+  const t = useTranslations("StatisticsSection");
+  const statistics = t.raw("statistics");
 
   return (
     <AnimatedSection className="py-20 px-6">
@@ -31,13 +28,13 @@ export function StatisticsSection() {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <GradientText>Our statistics</GradientText>
+            <GradientText>{t("title")}</GradientText>
           </motion.h2>
         </div>
 
         {/* Statistics grid */}
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
-          {statistics.map((stat, idx) => (
+          {statistics.map((stat: { number: string; label: string }, idx: number) => (
             <motion.div
               key={idx}
               className="relative h-full"

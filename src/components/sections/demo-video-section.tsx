@@ -39,11 +39,6 @@ export function DemoVideoSection() {
                   allowFullScreen
                 />
               </div>
-
-              {/* Video overlay info */}
-              <div className="absolute bottom-4 left-4 bg-gray-950/90 backdrop-blur-sm rounded-lg px-3 py-2 border border-gray-800/50">
-                <p className="text-sm text-gray-300">How we can help you succeed</p>
-              </div>
             </motion.div>
           </div>
         </div>

@@ -1,1 +1,303 @@
-{}
+{
+  "HeroSection": {
+    "splashTitle": "Energant.ai",
+    "title": "The AI Agent Helps You Think and Do.",
+    "subtitle": "Revolutionize your workflow with intelligent automation and decision-making capabilities",
+    "tryForFree": "Try for Free",
+    "contactUs": "Contact Us →"
+  },
+  "AIIntegrationHubSection": {
+    "title": "AI Integration Hub",
+    "subtitle": "Experience our AI agent in real-time conversation"
+  },
+  "AnimatedHeader": {
+    "navItems": {
+      "Home": "Home",
+      "AI Hub": "AI Hub",
+      "Features": "Features",
+      "Applications": "Applications",
+      "Statistics": "Statistics",
+      "Team": "Team",
+      "Partners": "Partners",
+      "FAQ": "FAQ",
+      "Pricing": "Pricing",
+      "Contact": "Contact"
+    },
+    "brand": "Energant.ai"
+  },
+  "ApplicationsSection": {
+    "title": "Applications",
+    "applications": {
+      "ai_hr": {
+        "title": "AI HR",
+        "description": "Intelligent personal assistant that helps with daily tasks and decision making."
+      },
+      "ai_data_scientist": {
+        "title": "AI Data Scientist",
+        "description": "24/7 customer support with natural language understanding and problem resolution."
+      },
+      "ai_og_specialist": {
+        "title": "AI O&G Specialist",
+        "description": "Advanced analytics and insights powered by artificial intelligence."
+      }
+    }
+  },
+  "ContactSection": {
+    "title": "Let's talk!",
+    "officeTitle": "Office:",
+    "abuDhabiOffice": {
+      "title": "Abu Dhabi Office:",
+      "address": "Al Khatem Tower, Al Maryah Island, Abu Dhabi"
+    },
+    "siliconValleyOffice": {
+      "title": "Silicon Valley Office:",
+      "address": "3101 Park Blvd. Palo Alto, CA"
+    },
+    "emailTitle": "Email:",
+    "email": "admin@energent.ai",
+    "form": {
+      "name": {
+        "label": "Name",
+        "placeholder": "John Doe"
+      },
+      "email": {
+        "label": "Email",
+        "placeholder": "john@example.com"
+      },
+      "phone": {
+        "label": "Phone",
+        "placeholder": "+31 (0) 20 343 9223"
+      },
+      "message": {
+        "label": "Message",
+        "placeholder": "Hi team Energent.ai! I'm reaching out for..."
+      },
+      "submit": "Submit"
+    }
+  },
+  "CoreFeaturesSection": {
+    "title": "Core features",
+    "features": {
+      "agentic_workflow": {
+        "title": "Agentic Workflow",
+        "description": "Intelligent automation that adapts to your business processes and makes decisions autonomously."
+      },
+      "data_engineering": {
+        "title": "Data Engineering",
+        "description": "Advanced data processing and analysis capabilities for better insights and decision making."
+      },
+      "conversational_reasoning": {
+        "title": "Conversational Reasoning",
+        "description": "Natural language processing that understands context and provides intelligent responses."
+      }
+    },
+    "badge": {
+      "count": "100+",
+      "label": "Automations"
+    }
+  },
+  "FAQSection": {
+    "title": "Answers",
+    "subtitle": "We've gone ahead and answered some of the questions you might have.",
+    "faqs": [
+      {
+        "q": "What is an AI Agent and how does it work?",
+        "a": "An AI agent is an intelligent system that can perceive its environment, make decisions, and take actions autonomously to achieve specific goals. Our AI agents use advanced machine learning algorithms, natural language processing, and contextual understanding to analyze data, learn from interactions, and execute complex tasks without constant human supervision."
+      },
+      {
+        "q": "How secure is your AI platform?",
+        "a": "Security is our top priority. We implement enterprise-grade security measures including end-to-end encryption, secure API endpoints, regular security audits, and compliance with industry standards like SOC 2, GDPR, and HIPAA. Your data is processed in secure, isolated environments and we never use your data to train our models without explicit consent."
+      },
+      {
+        "q": "Can I customize the AI agent for my specific business needs?",
+        "a": "Our platform offers extensive customization options including custom workflows, industry-specific templates, API integrations, and the ability to train the AI on your specific data and processes. Our Professional and Enterprise plans include dedicated support to help you tailor the solution to your exact requirements."
+      },
+      {
+        "q": "What kind of support do you provide?",
+        "a": "We offer comprehensive support across all plans. Starter plan includes email support with 24-48 hour response time. Professional plan includes priority support with live chat and phone support. Enterprise customers get a dedicated account manager, custom onboarding, and 24/7 priority support with guaranteed response times."
+      },
+      {
+        "q": "How does pricing work and can I change plans?",
+        "a": "Our pricing is transparent and flexible. You can choose between monthly or annual billing (with 2 months free on annual plans). You can upgrade, downgrade, or cancel your plan at any time. Usage is tracked in real-time, and we'll notify you before you approach your plan limits. Enterprise pricing is custom-tailored to your specific needs and usage patterns."
+      },
+      {
+        "q": "Do you offer enterprise-level integrations?",
+        "a": "Yes, we provide comprehensive enterprise integrations including REST APIs, webhooks, SSO authentication, and custom connectors for popular business tools like Salesforce, HubSpot, Slack, and Microsoft Teams. Our Enterprise plan includes dedicated integration support and custom API development."
+      }
+    ]
+  },
+  "PartnersSection": {
+    "title": "Our partners",
+    "partners": [
+      {
+        "name": "Epsilla",
+        "description": "AI-powered vector database platform"
+      },
+      {
+        "name": "Jobright",
+        "description": "AI-powered job search career platform"
+      }
+    ]
+  },
+  "PricingSection": {
+    "title": "Pricing",
+    "billing": {
+      "monthly": "Monthly billing",
+      "annually": "Annual billing"
+    },
+    "plans": [
+      {
+        "name": "Admin",
+        "description": "Ideal for simple routine workflow, such as data entry, in HR, Finance, Operation, and any Admin department.",
+        "monthlyPrice": "$199",
+        "annualPrice": "$1990",
+        "metrics": [
+          { "number": "20k", "label": "agent credits", "sublabel": "with unlimited workflows" },
+          { "number": "2k", "label": "pages of document reading", "sublabel": "and unlimited webpages reading" }
+        ],
+        "hosting": "Hosted by Energent.ai",
+        "features": [
+          "Basic workflow automation",
+          "Document processing",
+          "Email integration",
+          "Standard support",
+          "Basic analytics"
+        ],
+        "cta": "Start free trial"
+      },
+      {
+        "name": "Executive",
+        "description": "Functional as a team of Engineers, Analysts and Admins to get work done",
+        "monthlyPrice": "$499",
+        "annualPrice": "$4990",
+        "metrics": [
+          { "number": "100k", "label": "agent credits", "sublabel": "with unlimited workflows" },
+          { "number": "10k", "label": "pages of document reading", "sublabel": "and unlimited webpages reading" }
+        ],
+        "hosting": "Hosted by Energent.ai",
+        "features": [
+          "Advanced workflow automation",
+          "Team collaboration tools",
+          "Priority support",
+          "Advanced analytics",
+          "Custom integrations",
+          "API access"
+        ],
+        "cta": "Start free trial"
+      },
+      {
+        "name": "Enterprise",
+        "description": "Ideal for businesses with strict security and performance requirements",
+        "monthlyPrice": "Contact us",
+        "annualPrice": "Contact us",
+        "metrics": [
+          { "number": "up to ∞", "label": "workflow executions", "sublabel": "with unlimited steps" },
+          { "number": "up to ∞", "label": "active workflows and", "sublabel": "unlimited test ones" }
+        ],
+        "hosting": "Self-hosted (or hosted by Energent.ai)",
+        "features": [
+          "Unlimited everything",
+          "Custom deployment",
+          "Dedicated support",
+          "SLA guarantee",
+          "White-label solutions",
+          "Advanced security",
+          "Custom development"
+        ],
+        "cta": "Contact us"
+      }
+    ]
+  },
+  "ReviewsSection": {
+    "title": "Reviews",
+    "reviews": [
+      {
+        "name": "Richard Song",
+        "role": "CEO - Epsilla",
+        "review": "We had tried all the pdf extraction tool and AnyParser gave us the most accurate results."
+      },
+      {
+        "name": "Ethan Zheng",
+        "role": "CTO - Jobright",
+        "review": "AnyParser outperformed 10+ other parsers in our benchmarks, delivering top-tier resume parsing accuracy with the fastest multi-model LLM solution—all while maintaining exceptional performance."
+      },
+      {
+        "name": "Jon Conradt",
+        "role": "Principal Scientist - AWS",
+        "review": "AnyParser's advanced multimodal AI delivers where other approaches fail. Complex documents require this fusion of sight and language."
+      },
+      {
+        "name": "Cass",
+        "role": "Senior Scientist - AWS",
+        "review": "As an AI educator, I seek SOTA solutions for my ML practitioner students. AnyParser enhances retrieval accuracy in document parsing while balancing security, cost, and efficiency—an innovative tool for any pipeline!"
+      },
+      {
+        "name": "Felix Bai",
+        "role": "Sr. Solution Architect - AWS",
+        "review": "I am impressed by AnyParser's innovation in the space of AI and LLM, including the novel methodologies of synthetic data generation, retriever model fine-tuning in RAG, and their open-source products out of those innovations."
+      },
+      {
+        "name": "Steve Cooper",
+        "role": "Cofounder - ai ticker chat",
+        "review": "I have validated the quality of AnyParser goes far beyond traditional OCR tools like Langchain / Unstructured. Looking forward to using this in our future projects."
+      },
+      {
+        "name": "Jamal",
+        "role": "CEO - xtrategise",
+        "review": "It's far better than other tools! Our data analysts are able to triple their outputs."
+      }
+    ]
+  },
+  "StatisticsSection": {
+    "title": "Our statistics",
+    "statistics": [
+      { "number": "20+", "label": "Projects completed" },
+      { "number": "95%", "label": "Satisfied customers" },
+      { "number": "3h", "label": "Hours saved per day" },
+      { "number": "80k", "label": "Cost saved per month" }
+    ]
+  },
+  "TeamSection": {
+    "title": "Meet our team",
+    "teamMembers": [
+      { "name": "CEO", "role": "Chief Executive Officer" },
+      { "name": "David Li", "role": "CTO" },
+      { "name": "Alex Wang", "role": "Lead Engineer" },
+      { "name": "Sarah Chen", "role": "Product Manager" },
+      { "name": "Mike Johnson", "role": "AI Researcher" },
+      { "name": "Lisa Zhang", "role": "UX Designer" }
+    ]
+  },
+  "Footer": {
+    "brand": "Energent.ai",
+    "socialsTitle": "Socials",
+    "socials": [{ "name": "Twitter" }, { "name": "LinkedIn" }],
+    "linksTitle": "Links",
+    "applicationsTitle": "Applications",
+    "applications": [{ "name": "AI O&G Specialist" }, { "name": "AI HR" }, { "name": "AI Data Scientist" }],
+    "resourcesTitle": "Resources",
+    "resources": [
+      { "name": "Security Whitepaper" },
+      { "name": "Deployment Overview" },
+      { "name": "AWS Deployment" },
+      { "name": "Azure Deployment" },
+      { "name": "Templates" }
+    ],
+    "additionalLinks": [
+      { "name": "Company" },
+      { "name": "Pricing" },
+      { "name": "Blog" },
+      { "name": "Terms & Conditions" },
+      { "name": "Privacy Policy" }
+    ],
+    "copyright": "© {year}, Energent.ai - All rights reserved."
+  },
+  "NoCodeSection": {
+    "headline1": "No-code, no integration.",
+    "headline2": "Automation accessible without tech expertise.",
+    "cta": "Try for Free"
+  },
+  "DemoVideoSection": {
+    "videoTitle": "Demo Video"
+  }
+}

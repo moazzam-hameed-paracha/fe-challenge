@@ -7,6 +7,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { AnimatedSection } from "@/components/ui/animated-section";
 import { GradientText } from "@/components/ui/gradient-text";
 import { AnimatedBorderButton } from "@/components/ui/animated-border-button";
+import { useTranslations } from "next-intl";
 
 /**
  * Pricing Section Component
@@ -14,71 +15,20 @@ import { AnimatedBorderButton } from "@/components/ui/animated-border-button";
  * Features detailed plan comparison and interactive pricing
  */
 export function PricingSection() {
+  const t = useTranslations("PricingSection");
   const [billingCycle, setBillingCycle] = useState<"monthly" | "annually">("monthly");
 
-  const pricingPlans = [
-    {
-      name: "Admin",
-      description:
-        "Ideal for simple routine workflow, such as data entry, in HR, Finance, Operation, and any Admin department.",
-      monthlyPrice: "$199",
-      annualPrice: "$1990",
-      metrics: [
-        { number: "20k", label: "agent credits", sublabel: "with unlimited workflows" },
-        { number: "2k", label: "pages of document reading", sublabel: "and unlimited webpages reading" },
-      ],
-      hosting: "Hosted by Energent.ai",
-      features: [
-        "Basic workflow automation",
-        "Document processing",
-        "Email integration",
-        "Standard support",
-        "Basic analytics",
-      ],
-      popular: false,
-    },
-    {
-      name: "Executive",
-      description: "Functional as a team of Engineers, Analysts and Admins to get work done",
-      monthlyPrice: "$499",
-      annualPrice: "$4990",
-      metrics: [
-        { number: "100k", label: "agent credits", sublabel: "with unlimited workflows" },
-        { number: "10k", label: "pages of document reading", sublabel: "and unlimited webpages reading" },
-      ],
-      hosting: "Hosted by Energent.ai",
-      features: [
-        "Advanced workflow automation",
-        "Team collaboration tools",
-        "Priority support",
-        "Advanced analytics",
-        "Custom integrations",
-        "API access",
-      ],
-      popular: false,
-    },
-    {
-      name: "Enterprise",
-      description: "Ideal for businesses with strict security and performance requirements",
-      monthlyPrice: "Contact us",
-      annualPrice: "Contact us",
-      metrics: [
-        { number: "up to ∞", label: "workflow executions", sublabel: "with unlimited steps" },
-        { number: "up to ∞", label: "active workflows and", sublabel: "unlimited test ones" },
-      ],
-      hosting: "Self-hosted (or hosted by Energent.ai)",
-      features: [
-        "Unlimited everything",
-        "Custom deployment",
-        "Dedicated support",
-        "SLA guarantee",
-        "White-label solutions",
-        "Advanced security",
-        "Custom development",
-      ],
-      popular: false,
-    },
-  ];
+  const pricingPlans = t.raw("plans") as Array<{
+    name: string;
+    description: string;
+    monthlyPrice: string;
+    annualPrice: string;
+    popular?: boolean;
+    metrics: Array<{ number: string; label: string; sublabel: string }>;
+    hosting: string;
+    cta: string;
+    features: Array<string>;
+  }>;
 
   return (
     <AnimatedSection className="py-20 px-6">
@@ -91,7 +41,7 @@ export function PricingSection() {
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          <GradientText>Pricing</GradientText>
+          <GradientText>{t("title")}</GradientText>
         </motion.h2>
 
         {/* Billing toggle */}
@@ -103,7 +53,7 @@ export function PricingSection() {
                 billingCycle === "monthly" ? "border-[#70befa] border text-white" : "text-gray-400 hover:text-white"
               }`}
             >
-              Monthly billing
+              {t("billing.monthly")}
             </button>
             <button
               onClick={() => setBillingCycle("annually")}
@@ -111,7 +61,7 @@ export function PricingSection() {
                 billingCycle === "annually" ? "border-[#70befa] border text-white" : "text-gray-400 hover:text-white"
               }`}
             >
-              Annual billing
+              {t("billing.annually")}
             </button>
           </div>
         </div>
@@ -155,14 +105,14 @@ export function PricingSection() {
                                 </span>
                               </>
                             ) : (
-                              <GradientText>Contact us</GradientText>
+                              <GradientText>{plan.monthlyPrice}</GradientText>
                             )}
                           </div>
                         </div>
 
                         {/* Plan metrics */}
                         <div className="space-y-4 mb-6">
-                          {plan.metrics.map((metric, metricIndex) => (
+                          {plan.metrics.map((metric, metricIndex: number) => (
                             <div key={metricIndex} className="flex items-start">
                               <div className="mr-4">
                                 <div className="text-3xl font-bold text-[#70befa]">{metric.number}</div>
@@ -182,14 +132,12 @@ export function PricingSection() {
                         </div>
 
                         {/* CTA button */}
-                        <AnimatedBorderButton className="w-full mb-6">
-                          {plan.name === "Enterprise" ? "Contact us" : "Start free trial"}
-                        </AnimatedBorderButton>
+                        <AnimatedBorderButton className="w-full mb-6">{plan.cta}</AnimatedBorderButton>
                       </div>
 
                       {/* Plan features */}
                       <ul className="space-y-3 flex-grow">
-                        {plan.features.map((feature, featureIndex) => (
+                        {plan.features.map((feature: string, featureIndex: number) => (
                           <li key={featureIndex} className="flex gap-3 items-center">
                             <Image
                               src="/icons/tick.png"

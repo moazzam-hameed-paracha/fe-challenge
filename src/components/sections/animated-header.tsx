@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState, MouseEvent } from "react";
 import { AnimatePresence, motion, useScroll } from "framer-motion";
 import { X } from "lucide-react";
 import { GradientText } from "../ui/gradient-text";
+import { useTranslations } from "next-intl";
 
 /**
  * Animated Header Component
@@ -12,18 +13,19 @@ import { GradientText } from "../ui/gradient-text";
  * Responsive: burger menu on mobile that slides open
  */
 export function AnimatedHeader() {
+  const t = useTranslations("AnimatedHeader");
   // Navigation items
   const navItems = [
-    { name: "Home", href: "#" },
-    { name: "AI Hub", href: "#ai-hub" },
-    { name: "Features", href: "#features" },
-    { name: "Applications", href: "#applications" },
-    { name: "Statistics", href: "#statistics" },
-    { name: "Team", href: "#team" },
-    { name: "Partners", href: "#partners" },
-    { name: "FAQ", href: "#faq" },
-    { name: "Pricing", href: "#pricing" },
-    { name: "Contact", href: "#contact" },
+    { name: t("navItems.Home"), href: "#" },
+    { name: t("navItems.AI Hub"), href: "#ai-hub" },
+    { name: t("navItems.Features"), href: "#features" },
+    { name: t("navItems.Applications"), href: "#applications" },
+    { name: t("navItems.Statistics"), href: "#statistics" },
+    { name: t("navItems.Team"), href: "#team" },
+    { name: t("navItems.Partners"), href: "#partners" },
+    { name: t("navItems.FAQ"), href: "#faq" },
+    { name: t("navItems.Pricing"), href: "#pricing" },
+    { name: t("navItems.Contact"), href: "#contact" },
   ];
   const defaultItem = navItems[0].name;
 
@@ -105,7 +107,7 @@ export function AnimatedHeader() {
           {/* Logo or Brand */}
           <div className="text-xl font-bold text-white">
             <a href="#">
-              <GradientText>Energant.ai</GradientText>
+              <GradientText>{t("brand")}</GradientText>
             </a>
           </div>
 
