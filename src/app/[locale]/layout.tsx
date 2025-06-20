@@ -34,11 +34,11 @@ export const metadata: Metadata = {
     title: "Energent.ai - AI Agent helps you think and do",
     description:
       "Energent.ai is the AI teammate who gets things done on a real desktop, accurately, fast without complaining. You can watch, pause, or take over any time.",
-    url: "https://www.energent.ai",
+    url: "https://fe-challenge-beryl.vercel.app",
     siteName: "Energent.ai",
     images: [
       {
-        url: "https://www.energent.ai/og-image.png",
+        url: "/site-ss.png",
         width: 1200,
         height: 630,
         alt: "Energent.ai - AI Agent",
@@ -52,7 +52,7 @@ export const metadata: Metadata = {
     title: "Energent.ai - AI Agent helps you think and do",
     description:
       "Energent.ai is the AI teammate who gets things done on a real desktop, accurately, fast without complaining. You can watch, pause, or take over any time.",
-    images: ["https://www.energent.ai"],
+    images: ["/site-ss.png"],
   },
   themeColor: "#171717",
   icons: {
