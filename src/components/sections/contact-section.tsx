@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import { AnimatedSection } from "@/components/ui/animated-section";
@@ -12,10 +13,60 @@ import { useTranslations } from "next-intl";
 /**
  * Contact Section Component
  * Two-column layout with office information and contact form
- * Features responsive design and form adjustments
+ * Features responsive design, form adjustments, and user-facing validation messages
+ * Form does not submit to server; displays validation errors client-side
  */
 export function ContactSection() {
   const t = useTranslations("ContactSection");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [message, setMessage] = useState("");
+  const [errors, setErrors] = useState<{ name?: string; email?: string; phone?: string; message?: string }>({});
+  const [submitted, setSubmitted] = useState(false);
+
+  const validateEmail = (value: string) => {
+    // Simple email regex
+    const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return pattern.test(value);
+  };
+
+  const validatePhone = (value: string) => {
+    const normalized = value.trim();
+    const pattern = /^\+?[0-9\s\-()]{7,20}$/;
+    return pattern.test(normalized);
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const newErrors: typeof errors = {};
+    if (!name.trim()) {
+      newErrors.name = t("form.name.error") || "Name is required";
+    }
+    if (!email.trim()) {
+      newErrors.email = t("form.email.errorRequired") || "Email is required";
+    } else if (!validateEmail(email)) {
+      newErrors.email = t("form.email.errorInvalid") || "Enter a valid email address";
+    }
+    if (!phone.trim()) {
+      newErrors.phone = t("form.phone.errorRequired") || "Phone is required";
+    } else if (!validatePhone(phone)) {
+      newErrors.phone = t("form.phone.errorInvalid") || "Enter a valid phone number";
+    }
+    if (!message.trim()) {
+      newErrors.message = t("form.message.error") || "Message is required";
+    }
+    setErrors(newErrors);
+    if (Object.keys(newErrors).length === 0) {
+      // All valid
+      setSubmitted(true);
+      // Optionally clear fields or show success
+      console.log("Form valid: ", { name, email, phone, message });
+    } else {
+      setSubmitted(false);
+    }
+  };
+
   return (
     <AnimatedSection className="py-20 px-6">
       <div className="container max-w-6xl mx-auto px-6 grid lg:grid-cols-2 gap-12 items-start" id="contact">
@@ -62,67 +113,89 @@ export function ContactSection() {
         {/* Right column - Contact form */}
         <Card className="border border-gray-800/50 backdrop-blur-sm bg-transparent">
           <CardContent className="p-8">
-            <form className="space-y-6">
-              {/* Name field */}
-              <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
-                  {t("form.name.label")}
-                </label>
-                <Input
-                  id="name"
-                  type="text"
-                  required
-                  className="bg-gray-800/50 border-gray-700/50 text-white placeholder-gray-400 focus:border-[#70befa] focus:ring-[#70befa]"
-                  placeholder={t("form.name.placeholder")}
-                />
+            {submitted ? (
+              <div className="text-center">
+                <p className="text-green-400 text-lg">
+                  {t("form.successMessage") || "Thank you! Your message has been received."}
+                </p>
               </div>
+            ) : (
+              <form className="space-y-6" onSubmit={handleSubmit} noValidate>
+                {/* Name field */}
+                <div>
+                  <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
+                    {t("form.name.label")}
+                  </label>
+                  <Input
+                    id="name"
+                    name="name"
+                    type="text"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    className={`bg-gray-800/50 border ${errors.name ? "border-red-400" : "border-gray-700/50"} text-white placeholder-gray-400 focus:border-[#70befa] focus:ring-[#70befa]`}
+                    placeholder={t("form.name.placeholder")}
+                  />
+                  {errors.name && <p className="mt-1 text-sm text-red-400">{errors.name}</p>}
+                </div>
 
-              {/* Email field */}
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
-                  {t("form.email.label")}
-                </label>
-                <Input
-                  id="email"
-                  type="email"
-                  required
-                  className="bg-gray-800/50 border-gray-700/50 text-white placeholder-gray-400 focus:border-[#70befa] focus:ring-[#70befa]"
-                  placeholder={t("form.email.placeholder")}
-                />
-              </div>
+                {/* Email field */}
+                <div>
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
+                    {t("form.email.label")}
+                  </label>
+                  <Input
+                    id="email"
+                    name="email"
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className={`bg-gray-800/50 border ${errors.email ? "border-red-400" : "border-gray-700/50"} text-white placeholder-gray-400 focus:border-[#70befa] focus:ring-[#70befa]`}
+                    placeholder={t("form.email.placeholder")}
+                  />
+                  {errors.email && <p className="mt-1 text-sm text-red-400">{errors.email}</p>}
+                </div>
 
-              {/* Phone field */}
-              <div>
-                <label htmlFor="phone" className="block text-sm font-medium text-gray-300 mb-2">
-                  {t("form.phone.label")}
-                </label>
-                <Input
-                  id="phone"
-                  type="tel"
-                  className="bg-gray-800/50 border-gray-700/50 text-white placeholder-gray-400 focus:border-[#70befa] focus:ring-[#70befa]"
-                  placeholder={t("form.phone.placeholder")}
-                />
-              </div>
+                {/* Phone field */}
+                <div>
+                  <label htmlFor="phone" className="block text-sm font-medium text-gray-300 mb-2">
+                    {t("form.phone.label")}
+                  </label>
+                  <Input
+                    id="phone"
+                    name="phone"
+                    type="tel"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    className={`bg-gray-800/50 border ${errors.phone ? "border-red-400" : "border-gray-700/50"} text-white placeholder-gray-400 focus:border-[#70befa] focus:ring-[#70befa]`}
+                    placeholder={t("form.phone.placeholder")}
+                  />
+                  {errors.phone && <p className="mt-1 text-sm text-red-400">{errors.phone}</p>}
+                </div>
 
-              {/* Message field */}
-              <div>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-2">
-                  {t("form.message.label")}
-                </label>
-                <Textarea
-                  id="message"
-                  required
-                  rows={5}
-                  className="bg-gray-800/50 border-gray-700/50 text-white placeholder-gray-400 focus:border-[#70befa] focus:ring-[#70befa] resize-none"
-                  placeholder={t("form.message.placeholder")}
-                />
-              </div>
+                {/* Message field */}
+                <div>
+                  <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-2">
+                    {t("form.message.label")}
+                  </label>
+                  <Textarea
+                    id="message"
+                    name="message"
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                    required
+                    rows={5}
+                    className={`bg-gray-800/50 border ${errors.message ? "border-red-400" : "border-gray-700/50"} text-white placeholder-gray-400 focus:border-[#70befa] focus:ring-[#70befa] resize-none`}
+                    placeholder={t("form.message.placeholder")}
+                  />
+                  {errors.message && <p className="mt-1 text-sm text-red-400">{errors.message}</p>}
+                </div>
 
-              {/* Submit button */}
-              <AnimatedBorderButton type="submit" className="px-8 py-2">
-                {t("form.submit")}
-              </AnimatedBorderButton>
-            </form>
+                {/* Submit button */}
+                <AnimatedBorderButton type="submit" className="px-8 py-2">
+                  {t("form.submit")}
+                </AnimatedBorderButton>
+              </form>
+            )}
           </CardContent>
         </Card>
       </div>

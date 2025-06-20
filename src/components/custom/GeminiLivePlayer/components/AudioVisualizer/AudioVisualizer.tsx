@@ -16,7 +16,7 @@ const AudioVisualizer = () => {
 
   return (
     <div className="mx-auto flex items-center justify-center w-72 h-72">
-      <AudioPulse volume={volume} active={connected} hover={false} size={12} />
+      <AudioPulse volume={volume} active={connected} hover={false} size={8} />
     </div>
   );
 };

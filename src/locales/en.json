@@ -58,21 +58,28 @@
     "form": {
       "name": {
         "label": "Name",
-        "placeholder": "John Doe"
+        "placeholder": "John Doe",
+        "error": "Name is required"
       },
       "email": {
         "label": "Email",
-        "placeholder": "john@example.com"
+        "placeholder": "john@example.com",
+        "errorRequired": "Email is required",
+        "errorInvalid": "Enter a valid email address"
       },
       "phone": {
         "label": "Phone",
-        "placeholder": "+31 (0) 20 343 9223"
+        "placeholder": "+31 (0) 20 343 9223",
+        "errorRequired": "Phone is required",
+        "errorInvalid": "Enter a valid phone number"
       },
       "message": {
         "label": "Message",
-        "placeholder": "Hi team Energent.ai! I'm reaching out for..."
+        "placeholder": "Hi team Energent.ai! I'm reaching out for...",
+        "error": "Message is required"
       },
-      "submit": "Submit"
+      "submit": "Submit",
+      "successMessage": "Thank you! Your message has been received."
     }
   },
   "CoreFeaturesSection": {

@@ -1,10 +1,8 @@
 "use client";
 
+import { Altair, AudioVisualizer, ControlTray } from "./components";
 import { LiveAPIProvider } from "./contexts/LiveAPIContext";
-import { Altair } from "./components/altair/Altair";
-import ControlTray from "./components/control-tray/ControlTray";
 import { LiveClientOptions } from "./types";
-import { AudioVisualizer } from "./components/AudioVisualizer";
 
 const GEMINI_API_KEY = process.env.NEXT_PUBLIC_GEMINI_API_KEY as string;
 const GPT_API_KEY = process.env.NEXT_PUBLIC_OPENAI_API_KEY as string;

@@ -196,10 +196,13 @@ export const HeroSection: FC = () => {
             transition={{ duration: 0.8, delay: 0.8 }}
           >
             <div className="inline-flex rounded-lg bg-black bg-opacity-60 p-1">
-              <a href="#" className="px-6 py-1 text-white font-medium">
+              <a href="#ai-hub" className="px-6 py-1 text-white font-medium">
                 {t("tryForFree")}
               </a>
-              <a href="#" className="ml-4 px-6 py-1 text-[#70befa] font-medium border border-[#70befa] rounded-lg">
+              <a
+                href="#contact"
+                className="ml-4 px-6 py-1 text-[#70befa] font-medium border border-[#70befa] rounded-lg"
+              >
                 {t("contactUs")}
               </a>
             </div>

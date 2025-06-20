@@ -16,7 +16,7 @@ export function AIIntegrationHubSection() {
   const t = useTranslations("AIIntegrationHubSection");
   return (
     <AnimatedSection className="py-20 px-6">
-      <div className="container mx-auto">
+      <div className="container mx-auto" id="ai-hub">
         {/* Section title */}
         <motion.h2
           className="text-5xl md:text-6xl font-bold text-center mb-16"

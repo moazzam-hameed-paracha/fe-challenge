@@ -60,4 +60,6 @@ function AltairComponent() {
   return <></>;
 }
 
-export const Altair = memo(AltairComponent);
+const Altair = memo(AltairComponent);
+
+export default Altair;
