@@ -1,5 +1,7 @@
 # ComboML Frontend Challenge
 
+**Author:** Moazzam Hameed Paracha
+
 A modern, production-ready Next.js 15 app with TypeScript, Tailwind CSS, and a modular component structure. Built for scalability, maintainability, and rapid development.
 
 ## Quick Start

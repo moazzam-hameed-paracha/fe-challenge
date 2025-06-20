@@ -12,7 +12,7 @@ const apiOptions: LiveClientOptions = {
   clientType: GEMINI_API_KEY ? "gemini" : "gpt",
 };
 
-function App() {
+function AIAudioPlayer() {
   // this video reference is used for displaying the active stream, whether that is the webcam or screen capture
   // feel free to style as you see fit
   // either the screen capture, the video or null, if null we hide it
@@ -27,4 +27,4 @@ function App() {
   );
 }
 
-export default App;
+export default AIAudioPlayer;

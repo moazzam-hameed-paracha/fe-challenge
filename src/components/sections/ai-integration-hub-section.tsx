@@ -4,8 +4,8 @@ import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import { AnimatedSection } from "@/components/ui/animated-section";
 import { GradientText } from "@/components/ui/gradient-text";
-import { GeminiLivePlayer } from "../custom";
 import { useTranslations } from "next-intl";
+import { AIAudioPlayer } from "../custom";
 
 /**
  * AI Integration Hub Section Component
@@ -48,7 +48,7 @@ export function AIIntegrationHubSection() {
             <div className="border border-white/20 rounded-lg overflow-hidden shadow-xl">
               <Card className="bg-gray-900/50 border-none backdrop-blur-sm rounded-none">
                 <CardContent className="p-0">
-                  <GeminiLivePlayer />
+                  <AIAudioPlayer />
                 </CardContent>
               </Card>
             </div>
