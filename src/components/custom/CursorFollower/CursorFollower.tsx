@@ -30,8 +30,8 @@ const CursorFollower: React.FC = () => {
       // interpolate current towards target
       const dx = targetX.current - currentX.current;
       const dy = targetY.current - currentY.current;
-      // adjust the factor for speed: smaller factor = slower
-      const factor = 0.1;
+      // adjust the factor for speed: smaller factor = slower (50% slower than before)
+      const factor = 0.05;
       currentX.current += dx * factor;
       currentY.current += dy * factor;
       // apply to dot
