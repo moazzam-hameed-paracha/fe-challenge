@@ -27,6 +27,7 @@ npm run pretty
 ```
 
 ## Scripts (package.json)
+
 - `dev` – Start Next.js in development mode
 - `build` – Build the app for production
 - `start` – Start the production server
@@ -34,6 +35,7 @@ npm run pretty
 - `pretty` – Format code with Prettier
 
 ## File Structure
+
 - `src/app/` – App entry, routing, layouts, and global styles
 - `src/components/` – UI, custom, and section components
 - `src/components/custom/GeminiLivePlayer/` – Modular live player with subcomponents, hooks, and context
@@ -46,6 +48,7 @@ npm run pretty
 - `utils/` – Shared utility functions
 
 ## Tech Stack & Config
+
 - **Next.js 15** (App Router, TypeScript)
 - **Tailwind CSS** (with PostCSS)
 - **Radix UI** (accessible UI primitives)
@@ -56,9 +59,13 @@ npm run pretty
 - **Lucide** (icon library)
 
 ## Notes
+
 - Uses path aliases (see `tsconfig.json` and `components.json`)
 - All styling via Tailwind CSS (`src/app/globals.css`)
 - Modular, scalable component and section structure
+- Just look at (`.env.template`) to know env var names.
+- If both **gemin** and **gpt** key added, gemini takes precedence.
 
 ---
+
 For more, see the codebase and comments. Contributions and feedback welcome!
