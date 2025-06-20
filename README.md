@@ -1,36 +1,62 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ComboML Frontend Challenge
 
-## Getting Started
+A modern, production-ready Next.js 15 app with TypeScript, Tailwind CSS, and a modular component structure. Built for scalability, maintainability, and rapid development.
 
-First, run the development server:
+## Quick Start
 
 ```bash
+# Install dependencies
+npm install
+
+# Start development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+# Build for production
+npm run build
+
+# Start production server
+npm start
+
+# Lint code
+npm run lint
+
+# Format code
+npm run pretty
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Scripts (package.json)
+- `dev` – Start Next.js in development mode
+- `build` – Build the app for production
+- `start` – Start the production server
+- `lint` – Run ESLint for code quality
+- `pretty` – Format code with Prettier
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## File Structure
+- `src/app/` – App entry, routing, layouts, and global styles
+- `src/components/` – UI, custom, and section components
+- `src/components/custom/GeminiLivePlayer/` – Modular live player with subcomponents, hooks, and context
+- `src/components/sections/` – Page sections (hero, features, pricing, etc.)
+- `src/components/ui/` – Reusable UI primitives (button, card, dialog, etc.)
+- `src/i18n/` – Internationalization helpers
+- `src/locales/` – Translation files (e.g., `en.json`)
+- `public/` – Static assets (images, icons, logos)
+- `middleware.ts` – Next.js middleware
+- `utils/` – Shared utility functions
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Tech Stack & Config
+- **Next.js 15** (App Router, TypeScript)
+- **Tailwind CSS** (with PostCSS)
+- **Radix UI** (accessible UI primitives)
+- **Prettier & ESLint** (code style & linting)
+- **Zod** (schema validation)
+- **Framer Motion** (animations)
+- **next-intl** (i18n)
+- **Lucide** (icon library)
 
-## Learn More
+## Notes
+- Uses path aliases (see `tsconfig.json` and `components.json`)
+- All styling via Tailwind CSS (`src/app/globals.css`)
+- Modular, scalable component and section structure
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+For more, see the codebase and comments. Contributions and feedback welcome!
