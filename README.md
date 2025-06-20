@@ -9,6 +9,10 @@
 - [goldmermaid](https://github.com/goldmermaid)
 - [EnergentAI](https://github.com/EnergentAI)
 
+---
+
+**Demo:** [Watch on Loom](https://www.loom.com/share/f21b54de93814323bd3db9d95f5773a4?sid=a23fc831-940a-479c-80da-e01e95f5ccd7)
+
 A modern, production-ready Next.js 15 app with TypeScript, Tailwind CSS, and a modular component structure. Built for scalability, maintainability, and rapid development.
 
 ## Quick Start
