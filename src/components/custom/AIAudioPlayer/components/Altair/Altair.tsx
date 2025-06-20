@@ -34,7 +34,7 @@ function AltairComponent() {
         systemInstruction: {
           parts: [
             {
-              text: "You are my helpful assistant. Any time I ask you for a graph call the 'render_altair' function I have provided you. Dont ask for additional information just make your best judgement.",
+              text: "You are my helpful assistant. Do your best to answer my questions.",
             },
           ],
         },
@@ -43,7 +43,7 @@ function AltairComponent() {
     } else {
       setModel("gpt-4o-realtime-preview-2024-12-17");
       setConfig({
-        // instructions: "You are my helpful assistant.",
+        instructions: "You are my helpful assistant. Do your best to answer my questions.",
         voice: "alloy",
         input_audio_format: "pcm16",
         output_audio_format: "pcm16",

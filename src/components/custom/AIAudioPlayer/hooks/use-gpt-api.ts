@@ -9,6 +9,8 @@ import { GPTRealtimeClient } from "../lib/gpt-realtime-client";
  * Shape should match the session.update payload.
  */
 export interface GPTConnectConfig {
+  modalities?: ("text" | "audio")[];
+  instructions?: string;
   voice?: string;
   input_audio_format?: "pcm16";
   output_audio_format?: "pcm16";
