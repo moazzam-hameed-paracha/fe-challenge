@@ -2,6 +2,13 @@
 
 **Author:** Moazzam Hameed Paracha
 
+**Reviewers:**
+
+- [remi-guan](https://github.com/remi-guan)
+- [lingjiekong](https://github.com/lingjiekong)
+- [goldmermaid](https://github.com/goldmermaid)
+- [EnergentAI](https://github.com/EnergentAI)
+
 A modern, production-ready Next.js 15 app with TypeScript, Tailwind CSS, and a modular component structure. Built for scalability, maintainability, and rapid development.
 
 ## Quick Start
@@ -25,14 +32,6 @@ npm run lint
 # Format code
 npm run pretty
 ```
-
-## Scripts (package.json)
-
-- `dev` – Start Next.js in development mode
-- `build` – Build the app for production
-- `start` – Start the production server
-- `lint` – Run ESLint for code quality
-- `pretty` – Format code with Prettier
 
 ## File Structure
 
