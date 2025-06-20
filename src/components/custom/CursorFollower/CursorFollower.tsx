@@ -1,75 +1,69 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 
 /**
  * CursorFollower Component
- * Renders a small theme-colored dot that follows the mouse path with a 0.5s delay.
+ * Renders a small theme-colored dot that follows the mouse path with a lagged smooth motion.
+ * The dot moves immediately towards the cursor but interpolates its position for a smoother trailing effect.
  * Usage: Include <CursorFollower /> at root level (e.g., in Layout) so it can track mouse events globally.
  */
 const CursorFollower: React.FC = () => {
-  // Delay in milliseconds
-  const delay = 500;
-  // Queue of mouse positions with timestamp
-  const positionsRef = useRef<Array<{ x: number; y: number; time: number }>>([]);
-  // State for the follower dot position
-  const [dotPos, setDotPos] = useState<{ x: number; y: number } | null>(null);
-  const animationFrameRef = useRef<number | null>(null);
+  const dotRef = useRef<HTMLDivElement>(null);
+  // target coordinates
+  const targetX = useRef(0);
+  const targetY = useRef(0);
+  // current coordinates
+  const currentX = useRef(0);
+  const currentY = useRef(0);
+  // animation frame
+  const rafRef = useRef<number | null>(null);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      const { clientX: x, clientY: y } = e;
-      // Push position with current timestamp
-      positionsRef.current.push({ x, y, time: Date.now() });
+      targetX.current = e.clientX;
+      targetY.current = e.clientY;
     };
-
     window.addEventListener("mousemove", handleMouseMove);
 
     const animate = () => {
-      const now = Date.now();
-      // Process queued positions to find ones older than delay
-      const queue = positionsRef.current;
-      while (queue.length > 0) {
-        const pos = queue[0];
-        if (now - pos.time >= delay) {
-          // This position is ready to be shown
-          setDotPos({ x: pos.x, y: pos.y });
-          queue.shift(); // remove it
-        } else {
-          break;
-        }
+      // interpolate current towards target
+      const dx = targetX.current - currentX.current;
+      const dy = targetY.current - currentY.current;
+      // adjust the factor for speed: smaller factor = slower
+      const factor = 0.1;
+      currentX.current += dx * factor;
+      currentY.current += dy * factor;
+      // apply to dot
+      if (dotRef.current) {
+        dotRef.current.style.transform = `translate3d(${currentX.current - 4}px, ${currentY.current - 4}px, 0)`;
       }
-      // Schedule next frame
-      animationFrameRef.current = requestAnimationFrame(animate);
+      rafRef.current = requestAnimationFrame(animate);
     };
-
-    animationFrameRef.current = requestAnimationFrame(animate);
+    rafRef.current = requestAnimationFrame(animate);
 
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
-      if (animationFrameRef.current !== null) {
-        cancelAnimationFrame(animationFrameRef.current);
-      }
+      if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
     };
   }, []);
 
-  if (!dotPos) {
-    return null;
-  }
-
+  // Initial render: place dot off-screen
   return (
     <div
+      ref={dotRef}
       style={{
         position: "fixed",
-        left: dotPos.x,
-        top: dotPos.y,
+        left: 0,
+        top: 0,
         width: "8px",
         height: "8px",
         backgroundColor: "#70befa",
         borderRadius: "50%",
         pointerEvents: "none",
-        transform: "translate(-50%, -50%)",
+        transform: "translate3d(-100px, -100px, 0)",
         zIndex: 9999,
+        transition: "background-color 0.2s",
       }}
     />
   );
