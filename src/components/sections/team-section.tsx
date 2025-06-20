@@ -23,19 +23,21 @@ export function TeamSection() {
   ];
 
   return (
-    <AnimatedSection className="py-20 px-6 bg-gray-900/30">
-      <div className="container mx-auto">
+    <AnimatedSection className="py-20 px-6">
+      <div className="container mx-auto" id="team">
         {/* Section title */}
-        <motion.h2
-          className="text-5xl md:text-6xl font-bold text-center mb-16"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-        >
-          <GradientText>Meet our team</GradientText>
-        </motion.h2>
-
+        {/* Section title */}
+        <div className="max-w-6xl mx-auto">
+          <motion.h2
+            className="text-5xl md:text-6xl font-bold text-left mb-16"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+          >
+            <GradientText>Meet our team</GradientText>
+          </motion.h2>
+        </div>
         {/* Team carousel */}
         <InfiniteCarousel speed={30}>
           {teamMembers.map((member, index) => (

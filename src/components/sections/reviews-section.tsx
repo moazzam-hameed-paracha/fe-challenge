@@ -18,48 +18,48 @@ export function ReviewsSection() {
       name: "Richard Song",
       role: "CEO - Epsilla",
       review: "We had tried all the pdf extraction tool and AnyParser gave us the most accurate results.",
-      image: "/reviewers/richard-song.png",
+      image: "/placeholder.svg",
     },
     {
       name: "Ethan Zheng",
       role: "CTO - Jobright",
       review:
         "AnyParser outperformed 10+ other parsers in our benchmarks, delivering top-tier resume parsing accuracy with the fastest multi-model LLM solution—all while maintaining exceptional performance.",
-      image: "/reviewers/ethan-zheng.png",
+      image: "/placeholder.svg",
     },
     {
       name: "Jon Conradt",
       role: "Principal Scientist - AWS",
       review:
         "AnyParser's advanced multimodal AI delivers where other approaches fail. Complex documents require this fusion of sight and language.",
-      image: "/reviewers/jon-conradt.png",
+      image: "/placeholder.svg",
     },
     {
       name: "Cass",
       role: "Senior Scientist - AWS",
       review:
         "As an AI educator, I seek SOTA solutions for my ML practitioner students. AnyParser enhances retrieval accuracy in document parsing while balancing security, cost, and efficiency—an innovative tool for any pipeline!",
-      image: "/reviewers/cass.png",
+      image: "/placeholder.svg",
     },
     {
       name: "Felix Bai",
       role: "Sr. Solution Architect - AWS",
       review:
         "I am impressed by AnyParser's innovation in the space of AI and LLM, including the novel methodologies of synthetic data generation, retriever model fine-tuning in RAG, and their open-source products out of those innovations.",
-      image: "/reviewers/felix-bai.png",
+      image: "/placeholder.svg",
     },
     {
       name: "Steve Cooper",
       role: "Cofounder - ai ticker chat",
       review:
         "I have validated the quality of AnyParser goes far beyond traditional OCR tools like Langchain / Unstructured. Looking forward to using this in our future projects.",
-      image: "/reviewers/steve-cooper.png",
+      image: "/placeholder.svg",
     },
     {
       name: "Jamal",
       role: "CEO - xtrategise",
       review: "It's far better than other tools! Our data analysts are able to triple their outputs.",
-      image: "/reviewers/jamal.png",
+      image: "/placeholder.svg",
     },
   ];
 
@@ -68,7 +68,7 @@ export function ReviewsSection() {
       <div className="container mx-auto">
         {/* Section title */}
         <motion.h2
-          className="text-5xl md:text-6xl font-bold text-center mb-16"
+          className="max-w-6xl mx-auto text-5xl md:text-6xl font-bold text-left mb-16"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
@@ -80,7 +80,12 @@ export function ReviewsSection() {
         {/* Reviews carousel */}
         <InfiniteCarousel speed={40}>
           {reviews.map((review, index) => (
-            <motion.div key={index} whileHover={{ scale: 1.02 }} transition={{ duration: 0.2 }}>
+            <motion.div
+              key={index}
+              whileHover={{ scale: 1.02 }}
+              transition={{ duration: 0.2 }}
+              className="cursor-pointer"
+            >
               <Card className="border border-gray-800/50 rounded-lg hover:shadow-[0px_0px_2px_0.5px_rgba(112,190,250,0.75)] transition-all duration-300 w-80">
                 <CardContent className="p-8">
                   {/* Review quote */}
@@ -90,12 +95,11 @@ export function ReviewsSection() {
 
                   {/* Reviewer profile - Desktop layout */}
                   <div className="hidden md:flex items-center gap-3 p-4 border border-gray-800/50 rounded-lg">
-                    <div className="h-[50px] w-[50px] flex-shrink-0">
+                    <div className="h-[50px] w-[50px] flex-shrink-0 relative">
                       <Image
-                        src={review.image || "/placeholder.svg"}
+                        src={review.image}
                         alt={review.name}
-                        width={50}
-                        height={50}
+                        fill
                         className="w-full aspect-square object-cover rounded-full"
                       />
                     </div>
@@ -109,12 +113,11 @@ export function ReviewsSection() {
 
                   {/* Reviewer profile - Mobile/Tablet layout */}
                   <div className="md:hidden text-center">
-                    <div className="h-[50px] w-[50px] mx-auto mb-3">
+                    <div className="h-[50px] w-[50px] mx-auto mb-3 relative">
                       <Image
-                        src={review.image || "/placeholder.svg"}
+                        src={review.image}
                         alt={review.name}
-                        width={50}
-                        height={50}
+                        fill
                         className="w-full aspect-square object-cover rounded-full"
                       />
                     </div>

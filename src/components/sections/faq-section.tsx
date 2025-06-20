@@ -43,11 +43,11 @@ export function FAQSection() {
   ];
 
   return (
-    <AnimatedSection className="py-20 px-6 bg-gray-900/30">
-      <div className="container mx-auto">
+    <AnimatedSection className="py-20 px-6">
+      <div className="max-w-6xl mx-auto" id="faq">
         {/* Section title */}
         <motion.h2
-          className="text-5xl md:text-6xl font-bold text-center mb-16"
+          className="text-5xl md:text-6xl font-bold text-left mb-4"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
@@ -55,66 +55,59 @@ export function FAQSection() {
         >
           <GradientText>Answers</GradientText>
         </motion.h2>
+        {/* Subheader */}
+        <p className="text-gray-400 mb-12">We&apos;ve gone ahead and answered some of the questions you might have.</p>
+      </div>
 
-        {/* FAQ grid - responsive: 1 column on mobile, 2 on tablet, 3 on desktop */}
-        <div className="max-w-6xl mx-auto grid lg:grid-cols-2 xl:grid-cols-3 gap-4">
-          {faqs.map((faq, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              viewport={{ once: true }}
-              className="lg:col-span-1"
-            >
-              <Card
-                className={`bg-gray-900/50 backdrop-blur-sm transition-all duration-300 h-full ${
-                  expandedFaq === index ? "border-[#70befa]/50" : "border-gray-800/50 hover:border-gray-700/50"
-                }`}
-              >
-                <CardContent className="p-0">
-                  {/* FAQ question button */}
-                  <button
-                    onClick={() => setExpandedFaq(expandedFaq === index ? null : index)}
-                    className="w-full p-6 text-left flex items-center justify-between hover:bg-gray-800/30 transition-colors duration-200"
-                  >
-                    <h3 className="text-lg font-semibold pr-4">
-                      <GradientText>{faq.q}</GradientText>
-                    </h3>
-                    <div
-                      className={`flex-shrink-0 w-6 h-6 rounded-full border-2 border-[#70befa] flex items-center justify-center transition-all duration-200 ${
-                        expandedFaq === index ? "bg-[#70befa]" : ""
-                      }`}
-                    >
-                      {expandedFaq === index ? (
-                        <Minus className="w-3 h-3 text-white" />
-                      ) : (
-                        <Plus className="w-3 h-3 text-[#70befa]" />
-                      )}
-                    </div>
-                  </button>
-
-                  {/* FAQ answer with animation */}
-                  <AnimatePresence>
-                    {expandedFaq === index && (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: "auto", opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.3 }}
-                        className="overflow-hidden"
-                      >
-                        <div className="px-6 pb-6 pt-0">
-                          <p className="text-gray-400 leading-relaxed">{faq.a}</p>
-                        </div>
-                      </motion.div>
+      {/* FAQ grid - responsive: 1 column on mobile, 2 on tablet, 3 on desktop */}
+      <div className="max-w-6xl mx-auto grid lg:grid-cols-2 xl:grid-cols-3 gap-6">
+        {faqs.map((faq, index) => (
+          <motion.div
+            key={index}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: index * 0.1 }}
+            viewport={{ once: true }}
+          >
+            <Card className="bg-transparent border border-gray-700/50 rounded-lg h-full">
+              <CardContent className="p-0">
+                {/* FAQ question button */}
+                <button
+                  onClick={() => setExpandedFaq(expandedFaq === index ? null : index)}
+                  className="w-full p-6 text-left flex items-center justify-between transition-colors duration-200"
+                >
+                  <h3 className="text-lg font-semibold pr-4">
+                    <GradientText>{faq.q}</GradientText>
+                  </h3>
+                  <div className="flex-shrink-0 w-6 h-6 border-2 border-[#70befa] flex items-center justify-center transition-all duration-200 ">
+                    {expandedFaq === index ? (
+                      <Minus className="w-3 h-3 text-[#70befa]" />
+                    ) : (
+                      <Plus className="w-3 h-3 text-[#70befa]" />
                     )}
-                  </AnimatePresence>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
-        </div>
+                  </div>
+                </button>
+
+                {/* FAQ answer with animation */}
+                <AnimatePresence>
+                  {expandedFaq === index && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="overflow-hidden"
+                    >
+                      <div className="px-6 pb-6">
+                        <p className="text-gray-400 leading-relaxed">{faq.a}</p>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </CardContent>
+            </Card>
+          </motion.div>
+        ))}
       </div>
     </AnimatedSection>
   );

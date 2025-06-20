@@ -2,10 +2,8 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
 import { AnimatedSection } from "@/components/ui/animated-section";
 import { GradientText } from "@/components/ui/gradient-text";
-import { AnimatedBorderButton } from "@/components/ui/animated-border-button";
 
 /**
  * Applications Section Component
@@ -32,7 +30,7 @@ export function ApplicationsSection() {
 
   return (
     <AnimatedSection className="py-20 px-6 bg-transparent">
-      <div className="container mx-auto max-w-6xl">
+      <div className="container mx-auto max-w-6xl" id="applications">
         {/* Section title: left-aligned, larger */}
         <motion.h2
           className="text-6xl md:text-7xl font-bold text-left mb-12"

@@ -1,3 +1,6 @@
+"use client";
+
+import React from "react";
 import { GradientText } from "@/components/ui/gradient-text";
 
 /**
@@ -6,140 +9,113 @@ import { GradientText } from "@/components/ui/gradient-text";
  * Features gradient text headers and responsive grid layout
  */
 export function Footer() {
+  const socials = [
+    { name: "Twitter", href: "#" },
+    { name: "LinkedIn", href: "#" },
+  ];
+
+  const applications = [
+    { name: "AI O&G Specialist", href: "#" },
+    { name: "AI HR", href: "#" },
+    { name: "AI Data Scientist", href: "#" },
+  ];
+
+  const resources = [
+    { name: "Security Whitepaper", href: "#" },
+    { name: "Deployment Overview", href: "#" },
+    { name: "AWS Deployment", href: "#" },
+    { name: "Azure Deployment", href: "#" },
+    { name: "Templates", href: "#" },
+  ];
+
+  const additionalLinks = [
+    { name: "Company", href: "#" },
+    { name: "Pricing", href: "#" },
+    { name: "Blog", href: "#" },
+    { name: "Terms & Conditions", href: "#" },
+    { name: "Privacy Policy", href: "#" },
+  ];
+
   return (
     <footer className="bg-gray-950 border-t border-gray-800/50 py-12 px-6">
-      <div className="container mx-auto">
-        <div className="grid grid-cols-2 md:grid-cols-6 gap-8">
+      <div className="container mx-auto max-w-6xl">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
           {/* Brand */}
-          <div className="col-span-2 md:col-span-1">
-            <h3 className="text-2xl font-bold mb-8">
+          <div className="text-center md:text-left">
+            <h3 className="text-2xl font-bold mb-4">
               <GradientText>Energent.ai</GradientText>
             </h3>
           </div>
 
-          {/* Social Links */}
-          <div>
+          {/* Socials */}
+          <div className="text-center md:text-left">
             <h4 className="font-semibold mb-4">
               <GradientText>Socials</GradientText>
             </h4>
             <ul className="space-y-2 text-sm text-gray-400">
-              <li>
-                <a href="#" className="hover:text-white transition-colors">
-                  Twitter
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-white transition-colors">
-                  LinkedIn
-                </a>
-              </li>
+              {socials.map((social, idx) => (
+                <li key={idx}>
+                  <a href={social.href} className="hover:text-white transition-colors">
+                    {social.name}
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* Main Links */}
-          <div>
+          {/* Links: grouped */}
+          <div className="text-center md:text-left">
             <h4 className="font-semibold mb-4">
               <GradientText>Links</GradientText>
             </h4>
-            <ul className="space-y-2 text-sm text-gray-400">
-              <li>
-                <a href="#" className="hover:text-white transition-colors">
-                  Applications
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-white transition-colors">
-                  AI O&G Specialist
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-white transition-colors">
-                  AI HR
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-white transition-colors">
-                  AI Data Scientist
-                </a>
-              </li>
-            </ul>
+            {/* Applications subgroup */}
+            <div className="mb-6">
+              <h5 className="font-semibold text-white mb-2">Applications</h5>
+              <ul className="space-y-2 text-sm text-gray-400 ml-0 md:ml-2">
+                {applications.map((app, idx) => (
+                  <li key={idx}>
+                    <a href={app.href} className="hover:text-white transition-colors">
+                      {app.name}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            {/* Resources subgroup */}
+            <div>
+              <h5 className="font-semibold text-white mb-2">Resources</h5>
+              <ul className="space-y-2 text-sm text-gray-400 ml-0 md:ml-2">
+                {resources.map((res, idx) => (
+                  <li key={idx}>
+                    <a href={res.href} className="hover:text-white transition-colors">
+                      {res.name}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Additional Links on mobile below resources */}
+            <div className="mt-4 md:mt-6">
+              <ul className="space-y-2 text-sm text-gray-400">
+                {additionalLinks.map((link, idx) => (
+                  <li key={idx}>
+                    <a href={link.href} className="hover:text-white transition-colors">
+                      {link.name}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
 
-          {/* Resources */}
-          <div>
-            <h4 className="font-semibold mb-4">
-              <GradientText>Resources</GradientText>
-            </h4>
-            <ul className="space-y-2 text-sm text-gray-400">
-              <li>
-                <a href="#" className="hover:text-white transition-colors">
-                  Security Whitepaper
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-white transition-colors">
-                  Deployment Overview
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-white transition-colors">
-                  AWS Deployment
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-white transition-colors">
-                  Azure Deployment
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          {/* Additional Links Column 1 */}
-          <div>
-            <ul className="space-y-2 text-sm text-gray-400 mt-8">
-              <li>
-                <a href="#" className="hover:text-white transition-colors">
-                  Templates
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-white transition-colors">
-                  Company
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-white transition-colors">
-                  Pricing
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-white transition-colors">
-                  Blog
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          {/* Additional Links Column 2 */}
-          <div>
-            <ul className="space-y-2 text-sm text-gray-400 mt-8">
-              <li>
-                <a href="#" className="hover:text-white transition-colors">
-                  Terms & conditions
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-white transition-colors">
-                  Privacy policy
-                </a>
-              </li>
-            </ul>
-          </div>
+          {/* Empty or future content placeholder*/}
+          <div className="hidden md:block"></div>
         </div>
 
         {/* Copyright */}
-        <div className="border-t border-gray-800/50 mt-8 pt-8">
-          <p className="text-gray-400 text-sm">© 2025, Cambio Corp. - All rights reserved.</p>
+        <div className="border-t border-gray-800/50 mt-8 pt-8 text-left">
+          <p className="text-white text-sm">© {new Date().getFullYear()}, Energent.ai - All rights reserved.</p>
         </div>
       </div>
     </footer>

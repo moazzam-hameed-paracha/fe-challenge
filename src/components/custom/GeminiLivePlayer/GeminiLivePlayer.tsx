@@ -11,7 +11,7 @@ const GPT_API_KEY = process.env.NEXT_PUBLIC_OPENAI_API_KEY as string;
 
 const apiOptions: LiveClientOptions = {
   apiKey: GEMINI_API_KEY || GPT_API_KEY,
-  clientType: GEMINI_API_KEY ? "gpt" : "gpt",
+  clientType: GEMINI_API_KEY ? "gemini" : "gpt",
 };
 
 function App() {

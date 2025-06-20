@@ -1,8 +1,7 @@
 "use client";
 
-import React, { FC, useEffect, useRef, useState, MouseEvent } from "react";
-import { motion, useScroll } from "framer-motion";
-import { AnimatedBorderButton } from "@/components/ui/animated-border-button";
+import React, { FC, useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
 import { GradientText } from "@/components/ui/gradient-text";
 
 /**
@@ -13,8 +12,9 @@ import { GradientText } from "@/components/ui/gradient-text";
  * - Blobs stay fully within canvas bounds
  * - Blobs are slightly misshapen and always changing shape
  * - 50% brighter than before
+ * Calls onReady once the first draw completes
  */
-const BlobCanvas: FC = () => {
+const BlobCanvas: FC<{ onReady?: () => void }> = ({ onReady }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -47,6 +47,7 @@ const BlobCanvas: FC = () => {
       });
     }
 
+    let firstDraw = true;
     const draw = () => {
       if (!ctx) return;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -82,6 +83,10 @@ const BlobCanvas: FC = () => {
         ctx.fill();
       });
 
+      if (firstDraw && onReady) {
+        onReady();
+        firstDraw = false;
+      }
       animationFrame = requestAnimationFrame(draw);
     };
 
@@ -90,7 +95,7 @@ const BlobCanvas: FC = () => {
       cancelAnimationFrame(animationFrame);
       window.removeEventListener("resize", resize);
     };
-  }, []);
+  }, [onReady]);
 
   return <canvas ref={canvasRef} className="absolute inset-0 z-0" style={{ mixBlendMode: "screen" }} />;
 };
@@ -100,11 +105,13 @@ const BlobCanvas: FC = () => {
  * - Shows a splash of "Energant.ai" for 2s, then fades into the main hero
  * - Displays animated blobs in the background
  * - Uses dual-CTA design: "Try for Free" & "Contact Us →"
+ * - Main content spans full width, with animated underline once canvas is ready
  */
 export const HeroSection: FC = () => {
   const [showSplash, setShowSplash] = useState(true);
-  const { scrollY } = useScroll();
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [canvasReady, setCanvasReady] = useState(false);
+  const headingRef = useRef<HTMLHeadingElement>(null);
+  const [underlineWidth, setUnderlineWidth] = useState(0);
 
   // hide splash after 2s
   useEffect(() => {
@@ -112,16 +119,18 @@ export const HeroSection: FC = () => {
     return () => clearTimeout(t);
   }, []);
 
-  // header scroll logic (if needed)
+  // when canvas ready and heading exists, measure underline width
   useEffect(() => {
-    const unsub = scrollY.onChange((y) => setIsScrolled(y > 50));
-    return unsub;
-  }, [scrollY]);
+    if (canvasReady && headingRef.current) {
+      const rect = headingRef.current.getBoundingClientRect();
+      setUnderlineWidth(rect.width);
+    }
+  }, [canvasReady]);
 
   return (
     <section className="relative flex items-center justify-center min-h-screen overflow-hidden bg-gradient-to-b from-gray-900 to-gray-950">
       {/* moving blobs */}
-      <BlobCanvas />
+      <BlobCanvas onReady={() => setCanvasReady(true)} />
 
       {/* Splash Overlay */}
       {showSplash && (
@@ -145,13 +154,14 @@ export const HeroSection: FC = () => {
       {/* Main Hero Content */}
       {!showSplash && (
         <motion.div
-          className="relative z-10 flex flex-col items-center justify-center text-center max-w-3xl mx-auto px-4 py-16"
+          className="relative z-10 flex flex-col items-center justify-center text-center w-full px-4 py-16"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
           <motion.h1
-            className="text-5xl md:text-7xl font-bold mb-4 leading-snug"
+            ref={headingRef}
+            className="text-5xl md:text-7xl font-bold mb-4 leading-snug w-full"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
@@ -159,8 +169,18 @@ export const HeroSection: FC = () => {
             <GradientText>The AI Agent Helps You Think and Do.</GradientText>
           </motion.h1>
 
+          {/* Animated underline when canvas ready */}
+          {canvasReady && underlineWidth > 0 && (
+            <motion.div
+              className="h-1 bg-[#70befa] mt-1"
+              initial={{ width: 0 }}
+              animate={{ width: underlineWidth }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+            />
+          )}
+
           <motion.p
-            className="text-lg text-gray-400 mb-6 leading-relaxed"
+            className="text-lg text-gray-400 mb-6 leading-relaxed max-w-2xl"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
