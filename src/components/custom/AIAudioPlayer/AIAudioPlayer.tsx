@@ -11,11 +11,11 @@ const apiOptions: LiveClientOptions = {
   apiKey: GEMINI_API_KEY || GPT_API_KEY,
   clientType: GEMINI_API_KEY ? "gemini" : "gpt",
 };
-
+/**
+ * Audio Player Component
+ * This component provides a user interface for controlling audio playback.
+ */
 function AIAudioPlayer() {
-  // this video reference is used for displaying the active stream, whether that is the webcam or screen capture
-  // feel free to style as you see fit
-  // either the screen capture, the video or null, if null we hide it
   return (
     <LiveAPIProvider options={apiOptions}>
       <div className="flex flex-col items-center justify-center gap-10">
