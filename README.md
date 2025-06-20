@@ -64,6 +64,13 @@ A modular, extensible AI-powered audio player with real-time integration for Gem
 - Contains atomic, stateless UI elements (e.g., Button, Card, Dialog, Input, Select, etc.).
 - Used by both `sections` and `custom` components for a consistent look and feel.
 
+### ShadCN Integration
+
+- This project leverages ShadCN for building reusable UI components with Tailwind CSS.
+- ShadCN provides a library of pre-designed components that are customizable and optimized for modern web applications.
+- Components are styled using Tailwind utilities, ensuring consistency and responsiveness across the app.
+- Example components include buttons, modals, and dropdowns, which are used extensively throughout the app.
+
 ### `src/components/sections/`
 
 - Each file is a self-contained section of the landing page (e.g., Hero, Features, Pricing, Contact, etc.).
@@ -80,6 +87,21 @@ A modular, extensible AI-powered audio player with real-time integration for Gem
   - The layout (`src/app/[locale]/layout.tsx`) loads the correct locale, provides translations, and wraps the app in a theme provider.
 - **Theme:** Light/dark mode via `ThemeProvider`.
 - **Error Handling:** Custom error and not-found pages in `src/app/[locale]/error.tsx` and `not-found.tsx`.
+
+---
+
+
+
+## State Management
+
+This project uses the React Context API for state management, especially for sharing live API state and logic in the AI audio player and related components.
+
+- The Google reference implementation for the Gemini/GPT audio client already used Context, so reusing and extending that code was the most efficient and robust approach.
+- For a single-page application (SPA) with mostly local and feature-specific state, Context is lightweight, easy to reason about, and avoids unnecessary boilerplate.
+- Solutions like Redux or Zustand are more suitable for large-scale, multi-page apps with deeply nested or cross-cutting state. For this project, they would add complexity without clear benefit.
+- Context is fully compatible with React Server Components and the Next.js App Router.
+
+**Summary:** Context API is a perfect fit for this SPA, and reusing the Google implementation ensures reliability and maintainability.
 
 ---
 

@@ -5,18 +5,16 @@ import { AnimatePresence, motion, useScroll } from "framer-motion";
 import { X } from "lucide-react";
 import { GradientText } from "../ui/gradient-text";
 import { useTranslations } from "next-intl";
+import { Link, useRouter, usePathname } from "@/i18n/navigation";
+// Import Shadcn Select components:
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
+import { useSearchParams } from "next/navigation";
 
-/**
- * Animated Header Component
- * Fixed navigation header with smooth animations and hover effects
- * Features dynamic background blur based on scroll position
- * Responsive: burger menu on mobile that slides open
- */
 export function AnimatedHeader() {
   const t = useTranslations("AnimatedHeader");
   // Navigation items
   const navItems = [
-    { name: t("navItems.Home"), href: "#" },
+    { name: t("navItems.Home"), href: "#home" },
     { name: t("navItems.AI Hub"), href: "#ai-hub" },
     { name: t("navItems.Features"), href: "#features" },
     { name: t("navItems.Applications"), href: "#applications" },
@@ -37,6 +35,26 @@ export function AnimatedHeader() {
 
   // Mobile: whether menu is open
   const [menuOpen, setMenuOpen] = useState(false);
+
+  // Next.js App Router hooks
+  const router = useRouter();
+  const pathname = usePathname() || "/";
+  const searchParams = useSearchParams();
+
+  // Locales array: only "en" for now. If adding more locales later, extend this list.
+  const locales = [
+    { label: "English", value: "en" },
+    // e.g. { label: "Español", value: "es" }, ...
+  ];
+
+  // Extract current locale from the pathname's first segment.
+  // E.g. pathname "/en/about" -> locale "en"; if no match, fallback to "en"
+  const pathSegments = pathname.split("/").filter(Boolean); // e.g. ["en", "about"]
+  const firstSegment = pathSegments[0] || "";
+  const hasLocalePrefix = locales.some((l) => l.value === firstSegment);
+  const currentLocale = hasLocalePrefix ? firstSegment : "en";
+  // If default locale should not be prefixed in URLs, you might treat hasLocalePrefix=false and currentLocale="en",
+  // but avoid prefix when rebuilding URL. See comments below.
 
   // Update header appearance based on scroll position
   useEffect(() => {
@@ -93,6 +111,40 @@ export function AnimatedHeader() {
     setMenuOpen((prev) => !prev);
   };
 
+  // Handle locale change for App Router
+  const handleLocaleChange = (newLocale: string) => {
+    if (newLocale === currentLocale) return;
+
+    // Build new pathname: strip existing locale segment if present, then prefix newLocale.
+    let newPathname = pathname;
+    if (hasLocalePrefix) {
+      // Remove "/oldLocale" prefix
+      const restSegments = pathSegments.slice(1); // drop first
+      newPathname = "/" + restSegments.join("/");
+    }
+    // If newPathname becomes just "/" or empty, ensure "/"
+    if (!newPathname || newPathname === "") {
+      newPathname = "/";
+    }
+    // Prefix with new locale. If you want to always prefix (even default), do:
+    newPathname = `/${newLocale}${newPathname === "/" ? "" : newPathname}`;
+    // If you DO NOT want to prefix default locale (e.g. en) with "/en", add logic:
+    // if (newLocale === "en") {
+    //   newPathname = hasLocalePrefix
+    //     ? "/" + pathSegments.slice(1).join("/")
+    //     : pathname; // keep as-is if already no prefix
+    // }
+
+    // Reconstruct search params
+    const search = searchParams.toString();
+    const finalUrl = search ? `${newPathname}?${search}` : newPathname;
+
+    router.push(finalUrl);
+  };
+
+  // Compute selectedLocale for the Select component
+  const selectedLocale = currentLocale;
+
   return (
     <>
       <motion.nav
@@ -106,14 +158,15 @@ export function AnimatedHeader() {
         <div className="container mx-auto flex items-center justify-between h-16">
           {/* Logo or Brand */}
           <div className="text-xl font-bold text-white">
-            <a href="#">
+            {/* Link to homepage under current locale */}
+            <Link href={hasLocalePrefix ? `/${currentLocale}/` : `/${currentLocale}/`}>
               <GradientText>{t("brand")}</GradientText>
-            </a>
+            </Link>
           </div>
 
           {/* Desktop nav */}
           <div className="hidden md:flex items-center space-x-1 relative" ref={navRef} onMouseLeave={handleMouseLeave}>
-            {/* Transparent box, colored border, subtle glow */}
+            {/* Hover box */}
             {hoveredItem && (
               <motion.div
                 className="absolute h-10 rounded-lg pointer-events-none"
@@ -142,13 +195,28 @@ export function AnimatedHeader() {
             ))}
           </div>
 
+          {/* Language Toggle Selector using Shadcn Select */}
+          <div className="hidden md:flex items-center space-x-4">
+            <Select value={selectedLocale} onValueChange={(val) => handleLocaleChange(val)}>
+              <SelectTrigger className="w-[120px] px-4 py-2 bg-gray-800 text-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <SelectValue placeholder="Language" />
+              </SelectTrigger>
+              <SelectContent>
+                {locales.map((loc) => (
+                  <SelectItem key={loc.value} value={loc.value}>
+                    {loc.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
           {/* Mobile burger button */}
           <button
             className="md:hidden flex flex-col justify-center items-center w-8 h-8"
             onClick={toggleMenu}
             aria-label="Toggle menu"
           >
-            {/* Burger lines animated */}
             <motion.span
               className="block w-6 h-0.5 bg-white mb-1"
               animate={menuOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
@@ -199,6 +267,27 @@ export function AnimatedHeader() {
                     {item.name}
                   </a>
                 ))}
+                {/* Mobile locale selector */}
+                <div className="pt-4 border-t border-gray-800">
+                  <Select
+                    value={selectedLocale}
+                    onValueChange={(val) => {
+                      setMenuOpen(false);
+                      handleLocaleChange(val);
+                    }}
+                  >
+                    <SelectTrigger className="w-full px-4 py-2 bg-gray-800 text-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                      <SelectValue placeholder="Language" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {locales.map((loc) => (
+                        <SelectItem key={loc.value} value={loc.value}>
+                          {loc.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
               </nav>
             </div>
             {/* Click outside to close */}

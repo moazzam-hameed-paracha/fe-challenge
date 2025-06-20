@@ -4,6 +4,7 @@ import React, { FC, useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { GradientText } from "@/components/ui/gradient-text";
 import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 
 /**
  * BlobCanvas Component
@@ -196,9 +197,9 @@ export const HeroSection: FC = () => {
             transition={{ duration: 0.8, delay: 0.8 }}
           >
             <div className="inline-flex rounded-lg bg-black bg-opacity-60 p-1">
-              <a href="#ai-hub" className="px-6 py-1 text-white font-medium">
+              <Link href="#ai-hub" className="px-6 py-1 text-white font-medium">
                 {t("tryForFree")}
-              </a>
+              </Link>
               <a
                 href="#contact"
                 className="ml-4 px-6 py-1 text-[#70befa] font-medium border border-[#70befa] rounded-lg"

@@ -3,6 +3,7 @@
 import React from "react";
 import { GradientText } from "@/components/ui/gradient-text";
 import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 
 /**
  * Footer Component
@@ -36,9 +37,9 @@ export function Footer() {
             <ul className="space-y-2 text-sm text-gray-400">
               {socials.map((social: { name: string }, idx: number) => (
                 <li key={idx}>
-                  <a href="#" className="hover:text-white transition-colors">
+                  <Link href="#" className="hover:text-white transition-colors">
                     {social.name}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -55,9 +56,9 @@ export function Footer() {
               <ul className="space-y-2 text-sm text-gray-400 ml-0 md:ml-2">
                 {applications.map((app: { name: string }, idx: number) => (
                   <li key={idx}>
-                    <a href="#" className="hover:text-white transition-colors">
+                    <Link href="#" className="hover:text-white transition-colors">
                       {app.name}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -68,9 +69,9 @@ export function Footer() {
               <ul className="space-y-2 text-sm text-gray-400 ml-0 md:ml-2">
                 {resources.map((res: { name: string }, idx: number) => (
                   <li key={idx}>
-                    <a href="#" className="hover:text-white transition-colors">
+                    <Link href="#" className="hover:text-white transition-colors">
                       {res.name}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -81,9 +82,9 @@ export function Footer() {
               <ul className="space-y-2 text-sm text-gray-400">
                 {additionalLinks.map((link: { name: string }, idx: number) => (
                   <li key={idx}>
-                    <a href="#" className="hover:text-white transition-colors">
+                    <Link href="#" className="hover:text-white transition-colors">
                       {link.name}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
