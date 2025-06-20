@@ -49,8 +49,8 @@ function AltairComponent() {
         output_audio_format: "pcm16",
         turn_detection: {
           type: "server_vad",
-          prefix_padding_ms: 300,
-          silence_duration_ms: 200,
+          prefix_padding_ms: 600, // Increased for better noise tolerance
+          silence_duration_ms: 800, // Increased for less sensitivity to short pauses
           create_response: true,
         },
       });

@@ -41,11 +41,11 @@ export function ApplicationsSection() {
           <GradientText>{t("title")}</GradientText>
         </motion.h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
           {applications.map((app, idx) => (
             <motion.div
               key={idx}
-              className="relative h-full"
+              className="relative h-full flex flex-col"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: idx * 0.2 }}
@@ -57,9 +57,8 @@ export function ApplicationsSection() {
                 className="absolute top-0 left-0 w-full h-2"
                 style={{ background: "linear-gradient(to right, transparent, #70befa, transparent)" }}
               />
-
               {/* Outer container with theme border */}
-              <div className="border border-white/20 rounded-lg overflow-hidden">
+              <div className="border border-white/20 rounded-lg overflow-hidden flex flex-col h-full">
                 {/* Placeholder image */}
                 <div className="relative w-full aspect-video mb-6">
                   <img
@@ -68,13 +67,13 @@ export function ApplicationsSection() {
                     className="w-full h-full object-cover rounded-t-lg"
                   />
                 </div>
-                <div className="px-8 flex flex-col h-full">
+                <div className="px-8 flex flex-col">
                   <h4 className="text-2xl">
                     <GradientText>0{idx + 1}</GradientText> {t(`applications.${app.key}.title`)}
                   </h4>
                 </div>
                 {/* Content Card */}
-                <div className="p-8 flex flex-col h-full">
+                <div className="p-8 flex flex-col flex-1">
                   <p className="text-gray-400 flex-1 leading-relaxed mb-6">
                     {t(`applications.${app.key}.description`)}
                   </p>

@@ -67,10 +67,11 @@ export function PricingSection() {
         </div>
 
         {/* Pricing cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
           {pricingPlans.map((plan, index) => (
             <motion.div
               key={index}
+              className="h-full flex flex-col"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: index * 0.2 }}
@@ -78,20 +79,20 @@ export function PricingSection() {
               whileHover={{ y: -5 }}
             >
               {/* Card wrapper with top gradient border */}
-              <div className="relative">
+              <div className="relative flex flex-col h-full">
                 <div
                   className="absolute top-0 left-0 w-full h-1"
                   style={{ background: "linear-gradient(to right, transparent, #70befa, transparent)" }}
                 />
                 <div
-                  className={`${plan.popular ? "border-[#70befa]/50" : "border-white/20"} border rounded-lg overflow-hidden`}
+                  className={`${plan.popular ? "border-[#70befa]/50" : "border-white/20"} border rounded-lg overflow-hidden h-full flex flex-col`}
                 >
-                  <Card className="bg-transparent border-none backdrop-blur-sm rounded-none h-full">
+                  <Card className="bg-transparent border-none backdrop-blur-sm rounded-none h-full flex flex-col">
                     <CardContent className="p-8 flex flex-col h-full">
                       {/* Plan header */}
-                      <div className="mb-8">
+                      <div className="flex flex-col">
                         <h3 className="text-2xl font-bold mb-4 text-white">{plan.name}</h3>
-                        <p className="text-gray-400 text-sm mb-6 leading-relaxed">{plan.description}</p>
+                        <p className="text-gray-400 text-sm mb-6 leading-relaxed h-[70px]">{plan.description}</p>
 
                         {/* Pricing display */}
                         <div className="mb-6">
@@ -132,11 +133,11 @@ export function PricingSection() {
                         </div>
 
                         {/* CTA button */}
-                        <AnimatedBorderButton className="w-full mb-6">{plan.cta}</AnimatedBorderButton>
+                        <AnimatedBorderButton>{plan.cta}</AnimatedBorderButton>
                       </div>
 
                       {/* Plan features */}
-                      <ul className="space-y-3 flex-grow">
+                      <ul className="space-y-3 mt-6">
                         {plan.features.map((feature: string, featureIndex: number) => (
                           <li key={featureIndex} className="flex gap-3 items-center">
                             <Image

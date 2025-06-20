@@ -33,7 +33,7 @@ export function PartnersSection() {
           </motion.h2>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 justify-items-center">
+        <div className="flex flex-wrap justify-evenly">
           {partners.map((p: { name: string; description: string }, idx: number) => (
             <motion.div
               key={idx}

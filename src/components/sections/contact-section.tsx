@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { AnimatedBorderButton } from "@/components/ui/animated-border-button";
 import { useTranslations } from "next-intl";
+import { z } from "zod";
 
 /**
  * Contact Section Component
@@ -16,6 +17,18 @@ import { useTranslations } from "next-intl";
  * Features responsive design, form adjustments, and user-facing validation messages
  * Form does not submit to server; displays validation errors client-side
  */
+
+// Zod schema for form validation
+const contactSchema = z.object({
+  name: z.string().min(1, "Name is required"),
+  email: z.string().min(1, "Email is required").email("Enter a valid email address"),
+  phone: z
+    .string()
+    .min(1, "Phone is required")
+    .regex(/^\+?[0-9\s\-()]{7,20}$/, "Enter a valid phone number"),
+  message: z.string().min(1, "Message is required"),
+});
+
 export function ContactSection() {
   const t = useTranslations("ContactSection");
   const [name, setName] = useState("");
@@ -25,46 +38,23 @@ export function ContactSection() {
   const [errors, setErrors] = useState<{ name?: string; email?: string; phone?: string; message?: string }>({});
   const [submitted, setSubmitted] = useState(false);
 
-  const validateEmail = (value: string) => {
-    // Simple email regex
-    const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return pattern.test(value);
-  };
-
-  const validatePhone = (value: string) => {
-    const normalized = value.trim();
-    const pattern = /^\+?[0-9\s\-()]{7,20}$/;
-    return pattern.test(normalized);
-  };
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const newErrors: typeof errors = {};
-    if (!name.trim()) {
-      newErrors.name = t("form.name.error") || "Name is required";
-    }
-    if (!email.trim()) {
-      newErrors.email = t("form.email.errorRequired") || "Email is required";
-    } else if (!validateEmail(email)) {
-      newErrors.email = t("form.email.errorInvalid") || "Enter a valid email address";
-    }
-    if (!phone.trim()) {
-      newErrors.phone = t("form.phone.errorRequired") || "Phone is required";
-    } else if (!validatePhone(phone)) {
-      newErrors.phone = t("form.phone.errorInvalid") || "Enter a valid phone number";
-    }
-    if (!message.trim()) {
-      newErrors.message = t("form.message.error") || "Message is required";
-    }
-    setErrors(newErrors);
-    if (Object.keys(newErrors).length === 0) {
-      // All valid
-      setSubmitted(true);
-      // Optionally clear fields or show success
-      console.log("Form valid: ", { name, email, phone, message });
-    } else {
+    const formData = { name, email, phone, message };
+    const result = contactSchema.safeParse(formData);
+    if (!result.success) {
+      const newErrors: typeof errors = {};
+      for (const issue of result.error.issues) {
+        newErrors[issue.path[0] as keyof typeof errors] = issue.message;
+      }
+      setErrors(newErrors);
       setSubmitted(false);
+      return;
     }
+    setErrors({});
+    setSubmitted(true);
+    // Optionally clear fields or show success
+    console.log("Form valid: ", formData);
   };
 
   return (

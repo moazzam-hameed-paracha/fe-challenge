@@ -62,10 +62,10 @@ export function CoreFeaturesSection() {
           <GradientText>{t("title")}</GradientText>
         </motion.h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto items-stretch">
           {features.map((feature, index) => (
             <motion.div
-              className="h-full"
+              className="h-full flex flex-col"
               key={index}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -73,7 +73,7 @@ export function CoreFeaturesSection() {
               viewport={{ once: true }}
               whileHover={{ y: -5 }}
             >
-              <div className="relative">
+              <div className="relative flex flex-col h-full">
                 {/* Gradient top border */}
                 <div
                   className="absolute top-0 left-0 w-full h-2"
@@ -81,9 +81,9 @@ export function CoreFeaturesSection() {
                     background: "linear-gradient(to right, transparent, #70befa, transparent)",
                   }}
                 />
-                <div className="border border-white/20 rounded-lg overflow-hidden shadow-xl transition-shadow duration-300 hover:shadow-2xl">
-                  <Card className="bg-gray-900/50 border-none backdrop-blur-sm rounded-none h-full">
-                    <CardContent className={`px-8 pb-8 flex flex-col ${index === 0 ? "pt-0" : "pt-8"}`}>
+                <div className="border border-white/20 rounded-lg overflow-hidden shadow-xl transition-shadow duration-300 hover:shadow-2xl h-full flex flex-col">
+                  <Card className="bg-gray-900/50 border-none backdrop-blur-sm rounded-none h-full flex flex-col">
+                    <CardContent className="px-8 pb-8 flex flex-col flex-1">
                       <div className="relative aspect-video bg-gray-800/50 rounded-lg border border-gray-700/50 mb-6 overflow-hidden">
                         {feature.hasScroll ? (
                           <>
