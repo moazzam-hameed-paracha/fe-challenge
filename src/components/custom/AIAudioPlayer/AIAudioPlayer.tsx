@@ -1,6 +1,7 @@
 "use client";
 
 import { Altair, AudioVisualizer, ControlTray } from "./components";
+import { ChatWindow } from "./components/ChatWindow";
 import { LiveAPIProvider } from "./contexts/LiveAPIContext";
 import { LiveClientOptions } from "./types";
 
@@ -22,6 +23,7 @@ function AIAudioPlayer() {
         <Altair />
         <AudioVisualizer />
         <ControlTray />
+        <ChatWindow />
       </div>
     </LiveAPIProvider>
   );

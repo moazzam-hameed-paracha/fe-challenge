@@ -2,6 +2,7 @@ import React, { createContext, FC, ReactNode, useContext } from "react";
 import { LiveClientOptions } from "../types";
 import { useLiveAPI, UseLiveAPIResults } from "../hooks/use-live-api";
 import { useGPTRealtime, UseGPTRealtimeResults } from "../hooks/use-gpt-api";
+import { TranscriptionResult, useTranscription } from "../hooks/use-transcription";
 
 /**
  * Combined context value exposing both Gemini Live API and GPT Realtime API clients.
@@ -11,6 +12,14 @@ export interface LiveAPIContextValue {
   liveAPI: UseLiveAPIResults;
   gptAPI: UseGPTRealtimeResults;
   clientType: string;
+  transcription: TranscriptionResult & {
+    connect: () => void;
+    disconnect: () => void;
+    appendAudio: (audioBase64: string) => void;
+    commitAudio: () => void;
+    createResponse: () => void;
+    clearTranscript: () => void;
+  };
 }
 
 const LiveAPIContext = createContext<LiveAPIContextValue | undefined>(undefined);
@@ -28,8 +37,14 @@ export const LiveAPIProvider: FC<LiveAPIProviderProps> = ({ options, children })
   const liveAPI = useLiveAPI(options);
   const gptAPI = useGPTRealtime(options.apiKey);
 
+  // transcription for incoming audio
+  const transcription = useTranscription({
+    model: "whisper-1",
+    apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY as string,
+  });
+
   return (
-    <LiveAPIContext.Provider value={{ liveAPI, gptAPI, clientType: options.clientType }}>
+    <LiveAPIContext.Provider value={{ transcription, liveAPI, gptAPI, clientType: options.clientType }}>
       {children}
     </LiveAPIContext.Provider>
   );

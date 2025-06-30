@@ -1,26 +1,13 @@
-/**
- * Copyright 2024 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+"use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { Dispatch, SetStateAction, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { GenAILiveClient } from "../lib/genai-live-client";
 import { LiveClientOptions } from "../types";
 import { AudioStreamer } from "../lib/audio-streamer";
 import { audioContext } from "../lib/utils";
 import VolMeterWorket from "../lib/worklets/vol-meter";
 import { LiveConnectConfig } from "@google/genai";
+import { TranscriptionResult, useTranscription } from "./use-transcription";
 
 export type UseLiveAPIResults = {
   client: GenAILiveClient;
@@ -32,81 +19,140 @@ export type UseLiveAPIResults = {
   connect: () => Promise<void>;
   disconnect: () => Promise<void>;
   volume: number;
+  /** Transcripts of incoming bot audio */
+  transcriptions: { content: string; type: "bot" | "user" }[];
+  setTranscriptions: Dispatch<
+    SetStateAction<
+      {
+        content: string;
+        type: "bot" | "user";
+      }[]
+    >
+  >;
+  transcription: TranscriptionResult & {
+    connect: () => void;
+    disconnect: () => void;
+    appendAudio: (audioBase64: string) => void;
+    commitAudio: () => void;
+    createResponse: () => void;
+    clearTranscript: () => void;
+  };
 };
 
 export function useLiveAPI(options: LiveClientOptions): UseLiveAPIResults {
   const client = useMemo(() => new GenAILiveClient(options), [options]);
   const audioStreamerRef = useRef<AudioStreamer | null>(null);
 
-  const [model, setModel] = useState<string>("models/gemini-2.0-flash-exp");
+  const [model, setModel] = useState("models/gemini-2.0-flash-exp");
   const [config, setConfig] = useState<LiveConnectConfig>({});
   const [connected, setConnected] = useState(false);
   const [volume, setVolume] = useState(0);
+  const [transcriptions, setTranscriptions] = useState<{ content: string; type: "bot" | "user" }[]>([]);
 
-  // register audio for streaming server -> speakers
-  useEffect(() => {
-    if (!audioStreamerRef.current) {
-      audioContext({ id: "audio-out" }).then((audioCtx: AudioContext) => {
-        audioStreamerRef.current = new AudioStreamer(audioCtx);
-        audioStreamerRef.current
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          .addWorklet<any>("vumeter-out", VolMeterWorket, (ev: any) => {
-            setVolume(ev.data.volume);
-          })
-          .then(() => {
-            // Successfully added worklet
-          });
-      });
+  // transcription for incoming audio
+  const transcription = useTranscription({
+    model: "whisper-1",
+    apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY!,
+    turnDetection: {
+      type: "server_vad",
+      threshold: 0.5,
+      prefixPaddingMs: 100,
+      silenceDurationMs: 300,
+    },
+  });
+
+  // helper: ArrayBuffer → base64
+  function arrayBufferToBase64(buffer: ArrayBuffer) {
+    let binary = "";
+    const bytes = new Uint8Array(buffer);
+    for (let i = 0; i < bytes.byteLength; i++) {
+      binary += String.fromCharCode(bytes[i]);
     }
-  }, [audioStreamerRef]);
+    return window.btoa(binary);
+  }
 
+  // setup output audio + vumeter
+  useEffect(() => {
+    if (audioStreamerRef.current) return;
+    audioContext({ id: "audio-out" }).then((audioCtx) => {
+      const streamer = new AudioStreamer(audioCtx);
+      audioStreamerRef.current = streamer;
+      streamer
+        .addWorklet("vumeter-out", VolMeterWorket, (ev) => {
+          setVolume(ev.data.volume);
+        })
+        .catch(console.error);
+    });
+  }, []);
+
+  // wire client events — re-bind only when `client` or `transcription` changes
   useEffect(() => {
     const onOpen = () => {
       setConnected(true);
+      transcription.connect();
     };
-
     const onClose = () => {
       setConnected(false);
+      transcription.disconnect();
+      audioStreamerRef.current?.stop();
     };
+    const onError = (err: ErrorEvent) => console.error("LiveAPI error:", err);
+    const onAudio = (data: ArrayBuffer) => {
+      // play the audio
+      audioStreamerRef.current?.addPCM16(new Uint8Array(data));
 
-    const onError = (error: ErrorEvent) => {
-      console.error("error", error);
+      // send it off to transcription
+      const b64 = arrayBufferToBase64(data);
+      transcription.appendAudio(b64);
     };
-
-    const stopAudioStreamer = () => audioStreamerRef.current?.stop();
-
-    const onAudio = (data: ArrayBuffer) => audioStreamerRef.current?.addPCM16(new Uint8Array(data));
 
     client
-      .on("error", onError)
       .on("open", onOpen)
       .on("close", onClose)
-      .on("interrupted", stopAudioStreamer)
+      .on("error", onError)
+      .on("interrupted", () => audioStreamerRef.current?.stop())
       .on("audio", onAudio);
 
     return () => {
+      // only remove listeners — do NOT disconnect()
       client
-        .off("error", onError)
         .off("open", onOpen)
         .off("close", onClose)
-        .off("interrupted", stopAudioStreamer)
-        .off("audio", onAudio)
-        .disconnect();
+        .off("error", onError)
+        .off("interrupted", () => audioStreamerRef.current?.stop())
+        .off("audio", onAudio);
     };
-  }, [client]);
+  }, [client, transcription]);
 
+  // collect finished transcripts
+  useEffect(() => {
+    if (!transcription.transcript.length) return;
+
+    setTranscriptions((prev) => {
+      return [
+        ...prev,
+        {
+          content: transcription.transcript,
+          type: "bot",
+        },
+      ];
+    });
+    transcription.clearTranscript();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [transcription.transcript]);
+
+  // connect: open the GenAI socket (transcription starts in onOpen)
   const connect = useCallback(async () => {
-    if (!config) {
-      throw new Error("config has not been set");
-    }
-    client.disconnect();
+    if (!config) throw new Error("config has not been set");
     await client.connect(model, config);
   }, [client, config, model]);
 
+  // disconnect: tear down both
   const disconnect = useCallback(async () => {
+    transcription.disconnect();
     client.disconnect();
     setConnected(false);
-  }, [setConnected, client]);
+  }, [client, transcription]);
 
   return {
     client,
@@ -118,5 +164,8 @@ export function useLiveAPI(options: LiveClientOptions): UseLiveAPIResults {
     connect,
     disconnect,
     volume,
+    transcriptions,
+    setTranscriptions,
+    transcription,
   };
 }
