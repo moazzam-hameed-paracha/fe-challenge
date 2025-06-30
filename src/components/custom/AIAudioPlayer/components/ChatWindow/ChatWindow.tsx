@@ -8,7 +8,7 @@ export default function ChatWindow() {
   const { clientType, gptAPI, liveAPI } = useLiveAPIContext();
   const transcriptions = clientType === "gemini" ? liveAPI.transcriptions : gptAPI.transcriptions;
 
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const draggingRef = useRef(false);
   const dragStartRef = useRef({ x: 0, y: 0 });
@@ -20,7 +20,7 @@ export default function ChatWindow() {
     const width = 300;
     setPosition({
       x: window.innerWidth - width - 16,
-      y: 16,
+      y: 100,
     });
   }, []);
 
@@ -62,7 +62,7 @@ export default function ChatWindow() {
 
   const width = 300;
   // Use full viewport height minus margins
-  const styleHeight = "calc(100vh - 32px)";
+  const styleHeight = "calc(100vh - 182px)";
 
   return createPortal(
     <>
