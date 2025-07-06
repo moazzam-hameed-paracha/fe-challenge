@@ -3,7 +3,6 @@ export * from "./animated-header";
 export * from "./applications-section";
 export * from "./contact-section";
 export * from "./core-features-section";
-export * from "./demo-video-section";
 export * from "./faq-section";
 export * from "./footer";
 export * from "./hero-section";

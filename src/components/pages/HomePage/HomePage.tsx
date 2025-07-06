@@ -8,7 +8,6 @@ import {
   ApplicationsSection,
   ContactSection,
   CoreFeaturesSection,
-  DemoVideoSection,
   FAQSection,
   Footer,
   HeroSection,
@@ -18,7 +17,7 @@ import {
   ReviewsSection,
   StatisticsSection,
   TeamSection,
-} from "@/components/sections";
+} from "@/components/pages/HomePage/components";
 
 /**
  * Home Page Component
@@ -34,7 +33,6 @@ export default function HomePage() {
       {/* Page sections in logical order */}
       <HeroSection />
       <AIIntegrationHubSection />
-      <DemoVideoSection />
       <NoCodeSection />
       <CoreFeaturesSection />
       <ApplicationsSection />

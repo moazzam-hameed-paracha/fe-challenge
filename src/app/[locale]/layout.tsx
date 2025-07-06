@@ -18,9 +18,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Energent.ai - AI Agent helps you think and do",
-  description:
-    "Energent.ai is the AI teammate who gets things done on a real desktop, accurately, fast without complaining. You can watch, pause, or take over any time.",
+  title: "Demo - AI Agent Demo",
+  description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor.",
   keywords: [
     "AI agent",
     "automation",
@@ -32,17 +31,16 @@ export const metadata: Metadata = {
     "enterprise AI",
   ],
   openGraph: {
-    title: "Energent.ai - AI Agent helps you think and do",
-    description:
-      "Energent.ai is the AI teammate who gets things done on a real desktop, accurately, fast without complaining. You can watch, pause, or take over any time.",
+    title: "Demo - AI Agent Demo",
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor.",
     url: "https://fe-challenge-beryl.vercel.app",
-    siteName: "Energent.ai",
+    siteName: "AI Agent Demo",
     images: [
       {
         url: "/site-ss.png",
         width: 1200,
         height: 630,
-        alt: "Energent.ai - AI Agent",
+        alt: "AI Agent Demo",
       },
     ],
     locale: "en_US",
@@ -50,9 +48,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Energent.ai - AI Agent helps you think and do",
-    description:
-      "Energent.ai is the AI teammate who gets things done on a real desktop, accurately, fast without complaining. You can watch, pause, or take over any time.",
+    title: "Demo - AI Agent Demo",
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor.",
     images: ["/site-ss.png"],
   },
   themeColor: "#171717",

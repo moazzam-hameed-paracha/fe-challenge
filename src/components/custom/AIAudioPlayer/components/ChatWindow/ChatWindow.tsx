@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useEffect, useRef, useCallback } from "react";
-import { createPortal } from "react-dom";
 import { useLiveAPIContext } from "../../contexts/LiveAPIContext";
 
 export default function ChatWindow() {
@@ -64,58 +63,53 @@ export default function ChatWindow() {
   // Use full viewport height minus margins
   const styleHeight = "calc(100vh - 182px)";
 
-  return createPortal(
-    <>
-      {isOpen ? (
-        <div
-          className="fixed flex flex-col bg-red shadow-lg rounded-lg cursor-grab"
-          style={{
-            top: position.y,
-            left: position.x,
-            width,
-            height: styleHeight,
-            zIndex: 1000,
-          }}
-          onMouseDown={onMouseDown}
-        >
-          {/* Header */}
-          <div className="bg-blue-600 text-white px-4 py-2 rounded-t-lg select-none">Chat</div>
+  return isOpen ? (
+    <div
+      className="fixed flex flex-col bg-red shadow-lg rounded-lg cursor-grab"
+      style={{
+        top: position.y,
+        left: position.x,
+        width,
+        height: styleHeight,
+        zIndex: 1000,
+      }}
+      onMouseDown={onMouseDown}
+    >
+      {/* Header */}
+      <div className="bg-blue-600 text-white px-4 py-2 rounded-t-lg select-none">Chat</div>
 
-          {/* Messages container full height */}
-          <div
-            ref={messageContainerRef}
-            className="flex-1 overflow-auto p-2 space-y-2 bg-gray-50"
-            style={{ height: `calc(${styleHeight} - 96px)` }}
-          >
-            {transcriptions.map((msg, idx) => (
-              <div key={idx} className={`flex ${msg.type === "user" ? "justify-end" : "justify-start"}`}>
-                <div
-                  className={`px-3 py-2 rounded-lg max-w-[75%] break-words whitespace-pre-wrap ${
-                    msg.type === "user" ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-800"
-                  }`}
-                >
-                  {msg.content}
-                </div>
-              </div>
-            ))}
+      {/* Messages container full height */}
+      <div
+        ref={messageContainerRef}
+        className="flex-1 overflow-auto p-2 space-y-2 bg-gray-50"
+        style={{ height: `calc(${styleHeight} - 96px)` }}
+      >
+        {transcriptions.map((msg, idx) => (
+          <div key={idx} className={`flex ${msg.type === "user" ? "justify-end" : "justify-start"}`}>
+            <div
+              className={`px-3 py-2 rounded-lg max-w-[75%] break-words whitespace-pre-wrap ${
+                msg.type === "user" ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-800"
+              }`}
+            >
+              {msg.content}
+            </div>
           </div>
+        ))}
+      </div>
 
-          {/* Footer */}
-          <div className="bg-gray-100 p-2 flex justify-end rounded-b-lg h-12">
-            <button onClick={() => setIsOpen(false)} className="text-gray-600 hover:text-gray-800">
-              Close
-            </button>
-          </div>
-        </div>
-      ) : (
-        <button
-          className="fixed bottom-4 right-4 bg-blue-600 text-white p-3 rounded-full shadow-lg hover:bg-blue-500"
-          onClick={() => setIsOpen(true)}
-        >
-          Chat
+      {/* Footer */}
+      <div className="bg-gray-100 p-2 flex justify-end rounded-b-lg h-12">
+        <button onClick={() => setIsOpen(false)} className="text-gray-600 hover:text-gray-800">
+          Close
         </button>
-      )}
-    </>,
-    document.body
+      </div>
+    </div>
+  ) : (
+    <button
+      className="fixed bottom-4 right-4 bg-blue-600 text-white p-3 rounded-full shadow-lg hover:bg-blue-500"
+      onClick={() => setIsOpen(true)}
+    >
+      Chat
+    </button>
   );
 }

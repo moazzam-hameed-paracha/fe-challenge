@@ -5,7 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { AnimatedSection } from "@/components/ui/animated-section";
 import { GradientText } from "@/components/ui/gradient-text";
 import { useTranslations } from "next-intl";
-import { AIAudioPlayer } from "../custom";
+import { AIAudioPlayer } from "../../../custom";
 
 /**
  * AI Integration Hub Section Component

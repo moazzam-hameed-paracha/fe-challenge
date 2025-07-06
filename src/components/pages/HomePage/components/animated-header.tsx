@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState, MouseEvent } from "react";
 import { AnimatePresence, motion, useScroll } from "framer-motion";
 import { X } from "lucide-react";
-import { GradientText } from "../ui/gradient-text";
+import { GradientText } from "../../../ui/gradient-text";
 import { useTranslations } from "next-intl";
 import { Link, useRouter, usePathname } from "@/i18n/navigation";
 // Import Shadcn Select components:

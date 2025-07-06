@@ -1,19 +1,8 @@
-# ComboML Frontend Challenge
+# NEXT.js Demo
 
 **Author:** Moazzam Hameed Paracha
 
-**Reviewers:**
-
-- [remi-guan](https://github.com/remi-guan)
-- [lingjiekong](https://github.com/lingjiekong)
-- [goldmermaid](https://github.com/goldmermaid)
-- [EnergentAI](https://github.com/EnergentAI)
-
 ---
-
-**Demo:** [Watch on Loom](https://www.loom.com/share/f21b54de93814323bd3db9d95f5773a4?sid=a23fc831-940a-479c-80da-e01e95f5ccd7)
-
-**Live Deployment:** [fe-challenge-beryl.vercel.app](https://fe-challenge-beryl.vercel.app/en#ai-hub)
 
 A modern, production-ready Next.js 15 app with TypeScript, Tailwind CSS 4, and a modular component structure. Built for scalability, maintainability, and rapid development.
 
@@ -89,8 +78,6 @@ A modular, extensible AI-powered audio player with real-time integration for Gem
 - **Error Handling:** Custom error and not-found pages in `src/app/[locale]/error.tsx` and `not-found.tsx`.
 
 ---
-
-
 
 ## State Management
 

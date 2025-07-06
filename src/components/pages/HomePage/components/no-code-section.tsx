@@ -4,7 +4,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { AnimatedSection } from "@/components/ui/animated-section";
 import { GradientText } from "@/components/ui/gradient-text";
-import { AnimatedBorderButton } from "../ui/animated-border-button";
+import { AnimatedBorderButton } from "../../../ui/animated-border-button";
 import { useTranslations } from "next-intl";
 
 /**
